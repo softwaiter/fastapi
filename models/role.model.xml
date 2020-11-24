@@ -4,6 +4,6 @@
     <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="角色编码" />
     <property name="Name" field="f_name" length="128" notNull="true" uniqueGroup="uc_name" desc="角色名称" />
     <property name="ProductionId" field="f_production_id" type="Production" fieldType="Int32" notNull="true" desc="所属产品主键" />
-    <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" desc="创建时间" />
-    <property name="UpdateTime" type="DateTime" field="f_updatetime" desc="更新时间" />
+    <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
+    <property name="UpdateTime" type="DateTime" field="f_updatetime" defaultValue="{{CurrentDateTime}}" desc="更新时间" />
 </model>
