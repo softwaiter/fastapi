@@ -10,5 +10,5 @@
     <property name="Method" desc="接口请求方法（GET，POST，DELETE，PUT）" />
     
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
-    <property name="UpdateTime" type="DateTime" field="f_updatetime" defaultValue="{{CurrentDateTime}}" desc="更新时间" />
+    <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
 </model>
