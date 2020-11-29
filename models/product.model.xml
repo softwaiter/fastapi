@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<model name="Production" table="t_production">
+<model name="Product" table="t_product">
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
     <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="产品编码" />
     <property name="Name" field="f_name" length="128" notNull="true" uniqueGroup="uc_name" desc="产品名称" />
