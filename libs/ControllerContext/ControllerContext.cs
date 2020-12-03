@@ -22,12 +22,12 @@ namespace CodeM.FastApi.Context
         private dynamic mPostJson = null;
         private CookieWrapper mCookies = null;
 
-        public static ControllerContext FromHttpContext(HttpContext context, AppConfig config)
+        public static ControllerContext FromHttpContext(HttpContext context, ApplicationConfig config)
         {
             return new ControllerContext(context, config);
         }
 
-        public ControllerContext(HttpContext context, AppConfig config)
+        public ControllerContext(HttpContext context, ApplicationConfig config)
         {
             mContext = context;
 
@@ -39,6 +39,19 @@ namespace CodeM.FastApi.Context
             if (config != null)
             {
                 Config = config;
+            }
+        }
+
+        private SessionWrapper mSession;
+        public SessionWrapper Session
+        {
+            get
+            {
+                if (mSession == null)
+                {
+                    mSession = new SessionWrapper(mContext);
+                }
+                return mSession;
             }
         }
 
@@ -174,7 +187,7 @@ namespace CodeM.FastApi.Context
             }
         }
 
-        public AppConfig Config
+        public ApplicationConfig Config
         {
             get;
         }
