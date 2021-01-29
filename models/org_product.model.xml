@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <model name="OrgProduct" table="t_org_product">
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
-    <property name="OrgId" type="Organization" field="f_org_id" fieldType="Int32" notNull="true" ucGroup="uc_org_product" desc="所属机构" />
-    <property name="ProductId" field="f_product_id" type="Product" fieldType="Int32" notNull="true" ucGroup="uc_org_product" desc="所属产品主键" />
+    <property name="OrgCode" field="f_org_code" type="Organization" joinProp="Code" notNull="true" uniqueGroup="uc_org_prod" desc="所属机构编码" />
+    <property name="ProductCode" field="f_prod_code" type="Product" joinProp="Code" notNull="true" uniqueGroup="uc_org_prod" desc="所属产品编码" />
+    <property name="Users" field="f_users" type="Int32" defaultValue="0" desc="用户数" />
+    <property name="Expires" field="f_expires" type="DateTime" notNull="true" desc="有效期限" />    
     <property name="State" field="f_state" type="Int16" desc="状态（0:正常，1:停用，2:删除）" defaultValue="0" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
     <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />

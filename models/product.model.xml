@@ -5,7 +5,7 @@
     <property name="Name" field="f_name" length="128" notNull="true" uniqueGroup="uc_name" desc="产品名称" />
     <property name="Url" field="f_url" length="128" desc="链接地址" />
     <property name="Desc" field="f_desc" length="256" desc="产品描述" />
-    <property name="State" field="f_state" type="Int16" desc="状态（0:正常，1:停用，2:删除）" defaultValue="0" />
+    <property name="State" field="f_state" type="Int16" indexGroup="idx_state" desc="状态（0:正常，1:停用，2:删除）" defaultValue="0" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
     <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
 </model>
