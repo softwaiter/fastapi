@@ -6,4 +6,5 @@
     <router path="/org" model="Organization"></router>
     <router path="/org/product" model="OrgProduct"></router>
     <router path="/user" model="User"></router>
+    <router path="/user/product" model="UserProduct"></router>
 </routers>
