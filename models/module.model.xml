@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <model name="Module" table="t_module">
     <property name="Id" field="f_id" notNull="true" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
-    <property name="ProductCode" field="f_prod_code" type="Product" joinProp="Code" uniqueGroup="uc_prod_code" notNull="true" desc="所属产品编码" />
-    <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_prd_code" joinUpdate="false" desc="功能编码" />
+    <property name="Product" field="f_prod_code" type="Product" joinProp="Code" uniqueGroup="uc_prod_code" notNull="true" desc="所属产品" />
+    <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_prod_code" joinUpdate="false" desc="功能编码" />
     <property name="Name" field="f_name" length="128" notNull="true" desc="功能名称" />
-    <property name="State" field="f_state" type="Int16" indexGroup="idx_state" desc="状态（0:正常，1:停用, 2:删除）" defaultValue="0" />
+    <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
+    <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
     <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
 </model>
