@@ -4,6 +4,7 @@
     <router path="/product" model="Product"></router>
     <router path="/module" model="Module"></router>
     <router path="/role" model="Role"></router>
+    <router path="/role/module" model="RoleModule"></router>
     <router path="/org" model="Organization"></router>
     <router path="/org/product" model="OrgProduct"></router>
     <router path="/user" model="User"></router>
