@@ -275,23 +275,74 @@ namespace CodeM.FastApi.Router
                 try
                 {
                     Model m = OrmUtils.Model(item.Model);
-                    dynamic obj = m.NewObject();
 
-                    int count = m.PropertyCount;
-                    for (int i = 0; i < count; i++)
+                    if (cc.PostJson != null && cc.PostJson.Has("_items") &&
+                        cc.PostJson._items  is List<dynamic> &&
+                        item.ModelBatchAction.Contains("C"))
                     {
-                        Property p = m.GetProperty(i);
-                        if (!p.AutoIncrement)
+                        List<dynamic> newObjs = new List<dynamic>();
+                        int count = m.PropertyCount;
+                        for (int i = 0; i < Math.Min(100, cc.PostJson._items.Count); i++)
                         {
-                            string v = _GetParamValue(cc, p.Name);
-                            if (v != null)
+                            dynamic postItem = cc.PostJson._items[i];
+                            dynamic obj = m.NewObject();
+                            for (int j = 0; j < count; j++)
                             {
-                                obj.SetValue(p.Name, v);
+                                Property p = m.GetProperty(j);
+                                if (!p.AutoIncrement)
+                                {
+                                    string v = null;
+                                    if (postItem.Has(p.Name))
+                                    {
+                                        object result;
+                                        if (postItem.TryGetValue(p.Name, out result))
+                                        {
+                                            v = result != null ? result.ToString() : null;
+                                        }
+                                    }
+
+                                    if (v != null)
+                                    {
+                                        obj.SetValue(p.Name, v);
+                                    }
+                                }
                             }
+                            newObjs.Add(obj);
+                        }
+
+                        int transCode = m.GetTransaction();
+                        try
+                        {
+                            for (int i = 0; i < newObjs.Count; i++)
+                            {
+                                m.SetValues(newObjs[i]).Save(transCode, true);
+                            }
+                            OrmUtils.CommitTransaction(transCode);
+                        }
+                        catch (Exception exp)
+                        {
+                            OrmUtils.RollbackTransaction(transCode);
+                            throw exp;
                         }
                     }
-
-                    m.SetValues(obj).Save(true);
+                    else
+                    {
+                        dynamic obj = m.NewObject();
+                        int count = m.PropertyCount;
+                        for (int i = 0; i < count; i++)
+                        {
+                            Property p = m.GetProperty(i);
+                            if (!p.AutoIncrement)
+                            {
+                                string v = _GetParamValue(cc, p.Name);
+                                if (v != null)
+                                {
+                                    obj.SetValue(p.Name, v);
+                                }
+                            }
+                        }
+                        m.SetValues(obj).Save(true);
+                    }
 
                     await cc.JsonAsync();
                 }
@@ -595,10 +646,54 @@ namespace CodeM.FastApi.Router
             }
         }
 
+        private async Task _BatchDeleteModelAsync(ControllerContext cc,
+            RouterConfig.RouterItem item, params object[] args)
+        {
+            string key = string.Concat(item.Model, "_DELETE_BATCH");
+            if (mModelRouterConcurrents.GetOrAdd(key, 0) <= item.MaxConcurrent)
+            {
+                mModelRouterConcurrents.AddOrUpdate(key, 1, (itemKey, itemValue) =>
+                {
+                    return itemValue + 1;
+                });
+
+                try
+                {
+                    Model m = OrmUtils.Model(item.Model);
+
+                    for (int i = 0; i < m.PrimaryKeyCount; i++)
+                    {
+                        Property p = m.GetPrimaryKey(i);
+                        string values = cc.QueryParams.Get(p.Name, null);
+                        if (values != null)
+                        {
+                            object[] items = values.Split(",");
+                            m.In(p.Name, items);
+                        }
+                    }
+
+                    m.Delete();
+
+                    await cc.JsonAsync();
+                }
+                finally
+                {
+                    mModelRouterConcurrents.AddOrUpdate(key, 1, (itemKey, itemValue) =>
+                    {
+                        return Math.Max(0, itemValue - 1);
+                    });
+                }
+            }
+            else
+            {
+                throw new Exception(string.Concat("Router busy(", cc.Request.Method, " ", cc.Request.Path, ")"));
+            }
+        }
+
         private async Task _DeleteModelAsync(ControllerContext cc,
             RouterConfig.RouterItem item, params object[] args)
         {
-            string key = string.Concat(item.Model, "_DETAIL");
+            string key = string.Concat(item.Model, "_DELETE");
             if (mModelRouterConcurrents.GetOrAdd(key, 0) <= item.MaxConcurrent)
             {
                 mModelRouterConcurrents.AddOrUpdate(key, 1, (itemKey, itemValue) =>
@@ -631,6 +726,65 @@ namespace CodeM.FastApi.Router
                     {
                         await cc.JsonAsync(-1, null, "指定模型数据不存在。");
                     }
+                }
+                finally
+                {
+                    mModelRouterConcurrents.AddOrUpdate(key, 1, (itemKey, itemValue) =>
+                    {
+                        return Math.Max(0, itemValue - 1);
+                    });
+                }
+            }
+            else
+            {
+                throw new Exception(string.Concat("Router busy(", cc.Request.Method, " ", cc.Request.Path, ")"));
+            }
+        }
+
+        private async Task _BatchUpdateModelAsync(ControllerContext cc,
+            RouterConfig.RouterItem item, params object[] args)
+        {
+            string key = string.Concat(item.Model, "_UPDATE_BATCH");
+            if (mModelRouterConcurrents.GetOrAdd(key, 0) <= item.MaxConcurrent)
+            {
+                mModelRouterConcurrents.AddOrUpdate(key, 1, (itemKey, itemValue) =>
+                {
+                    return itemValue + 1;
+                });
+
+                try
+                {
+                    Model m = OrmUtils.Model(item.Model);
+
+                    for (int i = 0; i < m.PrimaryKeyCount; i++)
+                    {
+                        Property p = m.GetPrimaryKey(i);
+                        string values = cc.QueryParams.Get(p.Name, null);
+                        if (values != null)
+                        {
+                            object[] items = values.Split(",");
+                            m.In(p.Name, items);
+                        }
+                    }
+
+                    int count = m.PropertyCount;
+                    dynamic obj = m.NewObject();
+                    for (int i = 0; i < count; i++)
+                    {
+                        Property p = m.GetProperty(i);
+                        if (!p.AutoIncrement)
+                        {
+                            string v = _GetParamValue(cc, p.Name);
+                            if (v != null)
+                            {
+                                obj.SetValue(p.Name, v);
+                            }
+                        }
+                    }
+
+                    m.SetValues(obj).Update();
+
+                    await cc.JsonAsync();
                 }
                 finally
                 {
@@ -721,7 +875,8 @@ namespace CodeM.FastApi.Router
             }
 
             //新建
-            if (item.ModelAction.Contains("C"))
+            if (item.ModelAction.Contains("C") ||
+                item.ModelBatchAction.Contains("C"))
             {
                 builder.MapPost(item.Path, async (context) =>
                 {
@@ -756,12 +911,30 @@ namespace CodeM.FastApi.Router
                 });
             }
 
+            //批量删除
+            if (item.ModelBatchAction.Contains("R"))
+            {
+                builder.MapDelete(item.Path, async (context) =>
+                {
+                    await _ThroughRequestPipelineAsync(new ControllerInvokeDelegate(_BatchDeleteModelAsync), context, item);
+                });
+            }
+
             //修改
             if (item.ModelAction.Contains("U"))
             {
                 builder.MapPut(individualPath, async (context) =>
                 {
                     await _ThroughRequestPipelineAsync(new ControllerInvokeDelegate(_UpdateModelAsync), context, item);
+                });
+            }
+
+            //批量修改
+            if (item.ModelBatchAction.Contains("U"))
+            {
+                builder.MapPut(item.Path, async (context) =>
+                {
+                    await _ThroughRequestPipelineAsync(new ControllerInvokeDelegate(_BatchUpdateModelAsync), context, item);
                 });
             }
         }
