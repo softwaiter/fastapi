@@ -34,7 +34,10 @@
         <None Remove="models\organization.model.xml" />
         <None Remove="models\org_product.model.xml" />
         <None Remove="models\product.model.xml" />
+        <None Remove="models\proxy.model.xml" />
+        <None Remove="models\proxy_node.model.xml" />
         <None Remove="models\role_module.model.xml" />
+        <None Remove="models\user_role.model.xml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,8 +45,11 @@
       <Content Include="models\organization.model.xml" />
       <Content Include="models\org_product.model.xml" />
       <Content Include="models\product.model.xml" />
+      <Content Include="models\proxy.model.xml" />
+      <Content Include="models\proxy_node.model.xml" />
       <Content Include="models\role_module.model.xml" />
       <Content Include="models\user.model.xml" />
+      <Content Include="models\user_role.model.xml" />
     </ItemGroup>
 
     <ItemGroup>

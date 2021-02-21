@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<model name="RoleModule" table="t_role_module">
+<model name="UserRole" table="t_user_role">
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
-    <property name="Role" field="f_role_code" type="Role" joinProp="Code" notNull="true" uniqueGroup="uc_role_module" desc="所属角色" />
-    <property name="Module" field="f_module_code" type="Module" joinProp="Code" notNull="true" uniqueGroup="uc_role_module" desc="所属模块" />
+    <property name="User" field="f_user_code" type="User" joinProp="Code" notNull="true" uniqueGroup="uc_user_product_role" desc="所属用户" />
+    <property name="Role" field="f_role_code" type="Role" joinProp="Code" notNull="true" uniqueGroup="uc_user_product_role" desc="所属角色" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
     <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
 </model>

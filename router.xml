@@ -9,4 +9,7 @@
     <router path="/org/product" model="OrgProduct"></router>
     <router path="/user" model="User"></router>
     <router path="/user/product" model="UserProduct"></router>
+    <router path="/user/role" model="UserRole" batchAction="CR"></router>
+    <router path="/proxy" model="Proxy"></router>
+    <router path="/proxy/node" model="ProxyNode"></router>
 </routers>

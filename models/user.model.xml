@@ -3,10 +3,12 @@
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
     <property name="Org" type="Organization" joinProp="Code" field="f_org_code" notNull="True" indexGroup="idx_org_code" desc="所属机构" />
     <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="编码" />
-    <property name="Name" field="f_name" length="32" notNull="true" uniqueGroup="uc_name" joinInsert="true" joinUpdate="true" desc="名称" />
+    <property name="Name" field="f_name" length="32" notNull="true" uniqueGroup="uc_name" desc="名称" />
     <property name="Mobile" field="f_mobile" uniqueGroup="uc_mobile" length="16" desc="手机号码" />
     <property name="Email" field="f_email" uniqueGroup="uc_email" length="128" desc="常用邮箱" />
     <property name="Expires" field="f_expires" type="DateTime" notNull="true" desc="有效期限" />
+    <property name="Salt" field="f_salt" length="128" desc="密码加盐" />
+    <property name="Pass" field="f_pass" length="128" desc="登录密码" />
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
     <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" defaultValue="{{CurrentDateTime}}" desc="创建时间" />

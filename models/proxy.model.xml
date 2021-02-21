@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<model name="Proxy" table="t_proxy">
+    <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
+    <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="代理编码" />
+    <property name="Name" field="f_name" length="128" notNull="true" uniqueGroup="uc_name" desc="代理名称" />
+    <property name="Type" field="f_type" type="Int16" defaultValue="0" desc="代理类型（0：服务代理，1：页面代理）" />
+    <property name="MatchPath" field="f_match_path" length="256" desc="匹配路径" />
+    <property name="TransformMode" field="f_transform_mode" type="Int16" defaultValue="0" desc="转换模式（0：RemovePrefix，1：Prefix，2：Set，3：Pattern）" />
+    <property name="TransformPath" field="f_transform_path" length="256" desc="转换路径" />
+    <property name="LoadBalance" field="f_loadbalance" type="Int16" defaultValue="0" desc="负载均衡策略（0：PowerOfTwoChoices，1：LeastRequests，2：Random，3：RoundRobin，4：First）" />
+    <property name="RequestTimeout" field="f_request_timeout" type="Int32" notNull="true" defaultValue="0" desc="请求超时时间（单位：秒）" />
+    <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
+    <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
+    <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" defaultValue="{{CurrentDateTime}}" desc="创建时间" />
+    <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
+</model>
