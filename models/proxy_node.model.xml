@@ -2,8 +2,11 @@
 <model name="ProxyNode" table="t_proxy_node">
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
     <property name="Proxy" field="f_proxy_code" type="Proxy" joinProp="Code" notNull="True" indexGroup="idx_proxy" desc="所属代理" />
-    <property name="Url" field="f_url" length="128" desc="节点地址" />
+    <property name="Url" field="f_url" length="128" notNull="true" desc="节点地址" />
     <property name="Weight" type="Int16" field="f_weight" defaultValue="1" desc="权重" />
+    <property name="HealthPath" field="f_health_path" length="64" desc="健康检查路由" />
+    <property name="Description" field="f_description" length="256" desc="节点说明（IP地址或其他）" />
+    <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" defaultValue="{{CurrentDateTime}}" desc="创建时间" />
     <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
 </model>
