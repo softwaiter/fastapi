@@ -3,6 +3,7 @@ using CodeM.FastApi.Config;
 using CodeM.FastApi.Logger;
 using CodeM.FastApi.Middlewares;
 using CodeM.FastApi.Router;
+using CodeM.FastApi.System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -44,6 +45,8 @@ namespace CodeM.FastApi
             {
                 services.AddResponseCompression();
             }
+
+            ProxyUtils.Load(services);
 
             if (AppConfig.Session.Enable)
             {
@@ -88,6 +91,8 @@ namespace CodeM.FastApi
                     app.UseDeveloperExceptionPage();
                 }
 
+                app.UseRouting();
+
                 if (AppConfig.Compression.Enable)
                 {
                     app.UseResponseCompression();
@@ -106,6 +111,8 @@ namespace CodeM.FastApi
                 string routerFile = Path.Combine(env.ContentRootPath, "router.xml");
                 RouterManager.Current.Init(AppConfig, routerFile);
                 RouterManager.Current.MountRouters(app);
+
+                ProxyUtils.Run(app);
             }
             catch (Exception exp)
             {

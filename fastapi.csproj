@@ -55,6 +55,7 @@
     <ItemGroup>
         <ProjectReference Include="libs\Logger\CodeM.FastApi.Logger.csproj" />
         <ProjectReference Include="libs\Middlewares\CodeM.FastApi.Middlewares.csproj" />
+        <ProjectReference Include="libs\ReverseProxy\CodeM.FastApi.ReverseProxy.csproj" />
         <ProjectReference Include="libs\Router\CodeM.FastApi.Router.csproj" />
     </ItemGroup>
 
@@ -62,6 +63,10 @@
         <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
         <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="System\" />
     </ItemGroup>
 
     <ProjectExtensions>
