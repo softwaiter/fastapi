@@ -3,7 +3,7 @@
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
     <property name="Org" field="f_org_code" type="Organization" joinProp="Code" notNull="true" uniqueGroup="uc_org_prod" desc="所属机构" />
     <property name="Product" field="f_prod_code" type="Product" joinProp="Code" notNull="true" uniqueGroup="uc_org_prod" joinUpdate="false" desc="所属产品" />
-    <property name="Users" field="f_users" type="Int32" defaultValue="0" desc="用户数" />
+    <property name="Users" field="f_users" type="Int32" min="0" max="100000000" defaultValue="0" desc="用户数" />
     <property name="Expires" field="f_expires" type="DateTime" notNull="true" desc="有效期限" />    
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />

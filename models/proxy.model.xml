@@ -3,13 +3,16 @@
     <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
     <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="代理编码" />
     <property name="Name" field="f_name" length="128" notNull="true" uniqueGroup="uc_name" desc="代理名称" />
-    <property name="Type" field="f_type" type="Int16" defaultValue="0" desc="代理类型（0：服务代理，1：页面代理）" />
+    <property name="Type" field="f_type" type="Int16" defaultValue="0" min="0" max="1" desc="代理类型（0：服务代理，1：页面代理）" />
     <property name="MatchPath" field="f_match_path" length="256" notNull="true" uniqueGroup="uc_matchpath" desc="匹配路径" />
-    <property name="TransformMode" field="f_transform_mode" type="Int16" defaultValue="0" desc="转换模式（0：RemovePrefix，1：Prefix，2：Set，3：Pattern）" />
+    <property name="TransformMode" field="f_transform_mode" type="Int16" min="0" max="3" defaultValue="0" desc="转换模式（0：RemovePrefix，1：Prefix，2：Set，3：Pattern）" />
     <property name="TransformPath" field="f_transform_path" length="256" notNull="true" desc="转换路径" />
-    <property name="LoadBalance" field="f_loadbalance" type="Int16" defaultValue="0" desc="负载均衡策略（0：PowerOfTwoChoices，1：LeastRequests，2：Random，3：RoundRobin，4：First）" />
-    <property name="RequestTimeout" field="f_request_timeout" type="Int32" notNull="true" defaultValue="0" desc="请求超时时间（单位：秒）" />
+    <property name="LoadBalance" field="f_loadbalance" type="Int16" min="0" max="4" defaultValue="0" desc="负载均衡策略（0：First，1：Random，2：RoundRobin，3：LeastRequests，4：PowerOfTwoChoices）" />
+    <property name="RequestTimeout" field="f_request_timeout" type="Int32" min="1" max="600" notNull="true" defaultValue="100" desc="请求超时时间（单位：秒）" />
     <property name="HealthCheck" field="f_health_check" type="Boolean" defaultValue="false" desc="是否进行健康检查" />
+    <property name="HealthCheckPath" field="f_health_check_path" length="256" desc="健康检查路由" />
+    <property name="HealthCheckInterval" field="f_health_check_interval" type="Int32" min="1" max="600" defaultValue="15" desc="健康检查间隔（单位：秒）" />
+    <property name="HealthCheckTimeout" field="f_health_check_timeout" type="Int32" min="1" max="600" defaultValue="10" desc="健康检查超时（单位：秒）" />
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
     <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" defaultValue="{{CurrentDateTime}}" desc="创建时间" />
