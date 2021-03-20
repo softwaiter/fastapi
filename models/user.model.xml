@@ -9,7 +9,7 @@
     <property name="Expires" field="f_expires" type="DateTime" notNull="true" desc="有效期限" />
     <property name="Salt" field="f_salt" length="128" desc="密码加盐" />
     <property name="Password" field="f_pass" length="128" desc="登录密码" />
-    <property name="MustChangePass" type="Boolean" field="f_must_changepass" defaultValue="false" desc="是否必须修改密码" />
+    <property name="MustChangePassNow" type="Boolean" field="f_must_changepass_now" defaultValue="false" desc="是否必须即刻修改密码" />
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
     <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" defaultValue="{{CurrentDateTime}}" desc="创建时间" />
