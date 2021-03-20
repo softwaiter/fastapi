@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <routers>
-    <router path="/hello" handler="CodeM.FastApi.Controller.Hello.Handle"></router>
+    <router path="/hello" handler="CodeM.FastApi.Controllers.Hello.Handle"></router>
     <router path="/product" model="Product"></router>
     <router path="/module" model="Module"></router>
     <router path="/role" model="Role"></router>

@@ -1,7 +1,7 @@
 ﻿using CodeM.FastApi.Context;
 using System.Threading.Tasks;
 
-namespace CodeM.FastApi.Controller
+namespace CodeM.FastApi.Controllers
 {
     public class Hello
     {
