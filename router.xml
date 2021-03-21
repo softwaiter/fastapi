@@ -14,4 +14,5 @@
     <router path="/proxy/node" model="ProxyNode"></router>
     <router path="/proxy/reload" method="POST" handler="CodeM.FastApi.Controllers.ProxyReload.Handle" />
     <router path="/resetpass/{userid}" method="POST" handler="CodeM.FastApi.Controllers.ResetPass.Handle" />
+    <router path="/login" method="POST" handler="CodeM.FastApi.Controllers.Login.Handle" />
 </routers>
