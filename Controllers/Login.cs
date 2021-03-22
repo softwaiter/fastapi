@@ -13,13 +13,19 @@ namespace CodeM.FastApi.Controllers
         {
             if (cc.PostJson == null)
             {
-                await cc.JsonAsync(-1, null, "无效的参数。");
+                await cc.JsonAsync(-1, null, "缺少json参数。");
                 return;
             }
 
             string user = cc.PostJson.u;
             string pass = cc.PostJson.p;
             string from = cc.PostJson.f;
+
+            if (user == null || pass == null || from == null)
+            {
+                await cc.JsonAsync(-1, null, "无效的参数。");
+                return;
+            }
 
             dynamic userObj = OrmUtils.Model("User").Equals("Code", user)
                 .Or(new SubFilter().Equals("Mobile", user))
@@ -70,7 +76,68 @@ namespace CodeM.FastApi.Controllers
                 return;
             }
 
-            await cc.JsonAsync("Hello");
+            dynamic prodObj = ProductService.GetProductByCode(from);
+            if (prodObj == null)
+            {
+                await cc.JsonAsync(-1, null, "无效的业务平台。");
+                return;
+            }
+            if (!prodObj.Actived)
+            {
+                await cc.JsonAsync(-1, null, "业务平台已禁用。");
+                return;
+            }
+            if (prodObj.Deleted)
+            {
+                await cc.JsonAsync(-1, null, "业务平台已冻结。");
+                return;
+            }
+
+            dynamic orgprodObj = OrgProdService.GetOrgProdByCode(userObj.Org, from);
+            if (orgprodObj == null)
+            {
+                await cc.JsonAsync(-1, null, "缺少业务平台权限。");
+                return;
+            }
+            if (!orgprodObj.Actived)
+            {
+                await cc.JsonAsync(-1, null, "业务平台权限已禁用。");
+                return;
+            }
+            if (orgprodObj.Deleted)
+            {
+                await cc.JsonAsync(-1, null, "业务平台权限已冻结。");
+                return;
+            }
+            if (orgprodObj.Expires < DateTime.Now)
+            {
+                await cc.JsonAsync(-1, null, "业务平台权限已到期。");
+                return;
+            }
+
+            dynamic userprodObj = UserProdService.GetUserProdByCode(userObj.Code, from);
+            if (userprodObj == null)
+            {
+                await cc.JsonAsync(-1, null, "缺少业务平台权限！");
+                return;
+            }
+            if (!userprodObj.Actived)
+            {
+                await cc.JsonAsync(-1, null, "业务平台权限已禁用！");
+                return;
+            }
+            if (userprodObj.Deleted)
+            {
+                await cc.JsonAsync(-1, null, "业务平台权限已冻结！");
+                return;
+            }
+            if (userprodObj.Expires < DateTime.Now)
+            {
+                await cc.JsonAsync(-1, null, "业务平台权限已到期！");
+                return;
+            }
+
+            await cc.JsonAsync("成功。");
         }
     }
 }
