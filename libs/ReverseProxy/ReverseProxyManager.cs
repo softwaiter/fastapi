@@ -24,7 +24,7 @@ namespace CodeM.FastApi.ReverseProxy
             prxoy.MathPath = matchPath;
             prxoy.TransformMode = transMode;
             prxoy.TransformPath = transPath;
-            prxoy.LoadBalancing = loadBalancing.Value;
+            prxoy.LoadBalancing = loadBalancing ?? null;
             prxoy.RequestTimeout = requestTimeout;
             prxoy.HealthCheck = healthCheck;
             prxoy.HealthCheckPath = healthCheckPath;
