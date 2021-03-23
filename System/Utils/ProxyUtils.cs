@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
-namespace CodeM.FastApi.System
+namespace CodeM.FastApi.System.Utils
 {
     public class ProxyUtils
     {

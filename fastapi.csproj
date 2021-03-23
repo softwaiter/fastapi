@@ -65,10 +65,6 @@
         <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="System\" />
-    </ItemGroup>
-
     <ProjectExtensions>
         <VisualStudio>
             <UserProperties appsettings_1json__JsonSchema="" />
