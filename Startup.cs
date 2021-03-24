@@ -3,6 +3,7 @@ using CodeM.FastApi.Config;
 using CodeM.FastApi.Logger;
 using CodeM.FastApi.Middlewares;
 using CodeM.FastApi.Router;
+using CodeM.FastApi.System.Middlewares;
 using CodeM.FastApi.System.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -107,6 +108,8 @@ namespace CodeM.FastApi
                 {
                     app.UseMiddleware<CorsMiddleware>(AppConfig);
                 }
+
+                app.UseMiddleware<PermissionMiddleware>(AppConfig);
 
                 string routerFile = Path.Combine(env.ContentRootPath, "router.xml");
                 RouterManager.Current.Init(AppConfig, routerFile);
