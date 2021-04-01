@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeM.FastApi.Middlewares",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeM.FastApi.ReverseProxy", "libs\ReverseProxy\CodeM.FastApi.ReverseProxy.csproj", "{EC950022-F189-4713-8C87-4A8486662E74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeM.FastApi.DbUpgrade", "libs\DbUpgrade\CodeM.FastApi.DbUpgrade.csproj", "{20E6EC9E-53E7-416F-A29D-197A70813B2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{EC950022-F189-4713-8C87-4A8486662E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC950022-F189-4713-8C87-4A8486662E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC950022-F189-4713-8C87-4A8486662E74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E6EC9E-53E7-416F-A29D-197A70813B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E6EC9E-53E7-416F-A29D-197A70813B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E6EC9E-53E7-416F-A29D-197A70813B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E6EC9E-53E7-416F-A29D-197A70813B2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
