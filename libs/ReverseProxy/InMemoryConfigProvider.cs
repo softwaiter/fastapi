@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Primitives;
-using Microsoft.ReverseProxy.Abstractions;
-using Microsoft.ReverseProxy.Service;
 using System.Collections.Generic;
 using System.Threading;
+using Yarp.ReverseProxy.Abstractions;
+using Yarp.ReverseProxy.Service;
 
 namespace CodeM.FastApi.ReverseProxy
 {

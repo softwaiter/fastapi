@@ -1,5 +1,5 @@
 ﻿using CodeM.FastApi.ReverseProxy;
-using Microsoft.ReverseProxy.Service;
+using Yarp.ReverseProxy.Service;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

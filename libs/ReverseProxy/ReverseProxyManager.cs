@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.ReverseProxy.Abstractions;
-using Microsoft.ReverseProxy.Abstractions.ClusterDiscovery.Contract;
-using Microsoft.ReverseProxy.Abstractions.Config;
-using Microsoft.ReverseProxy.Service.Proxy;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Yarp.ReverseProxy.Abstractions;
+using Yarp.ReverseProxy.Abstractions.ClusterDiscovery.Contract;
+using Yarp.ReverseProxy.Abstractions.Config;
+using Yarp.ReverseProxy.Service.Proxy;
 
 namespace CodeM.FastApi.ReverseProxy
 {
