@@ -9,41 +9,61 @@ namespace CodeM.FastApi.Controllers
     {
         public async Task Handle(ControllerContext cc)
         {
-            string token = cc.Headers.Get("laodan-token", string.Empty);
+            string token = cc.Headers.Get("token", string.Empty);
             if (!string.IsNullOrWhiteSpace(token))
             {
-                string userCode= cc.Session.GetString("code");
-                if (!string.IsNullOrWhiteSpace(userCode))
+                string platform = cc.Headers.Get("platform", string.Empty);
+                if (!string.IsNullOrWhiteSpace(platform))
                 {
-                    dynamic loggedInUser = UserService.GetUserByCode(userCode);
-
-                    List<dynamic> userRoles = UserRoleService.GetListByUser(userCode);
-
-                    List<object> roleCodes = new List<object>();
-                    foreach (dynamic userRole in userRoles)
+                    string userCode = cc.Session.GetString("code");
+                    if (!string.IsNullOrWhiteSpace(userCode))
                     {
-                        roleCodes.Add(userRole.Role);
+                        dynamic loggedInUser = UserService.GetUserByCode(userCode);
+
+                        List<dynamic> userRoles = UserRoleService.GetListByUser(userCode);
+
+                        List<object> roleCodes = new List<object>();
+                        foreach (dynamic userRole in userRoles)
+                        {
+                            roleCodes.Add(userRole.Role);
+                        }
+
+                        List<string> moduleCodes = new List<string>();
+
+                        List<dynamic> roleModules = RoleModuleService.GetListByRole(roleCodes.ToArray());
+                        foreach (dynamic roleModule in roleModules)
+                        {
+                            if (!moduleCodes.Contains(roleModule.Module))
+                            {
+                                moduleCodes.Add(roleModule.Module);
+                            }
+                        }
+
+                        List<dynamic> userModules = UserModuleService.GetListByUserProduct(userCode, platform);
+                        foreach (dynamic userModule in userModules)
+                        {
+                            if (!moduleCodes.Contains(userModule.Module))
+                            {
+                                moduleCodes.Add(userModule.Module);
+                            }
+                        }
+
+                        object result = new
+                        {
+                            user = new
+                            {
+                                Code = loggedInUser.Code,
+                                Name = loggedInUser.Name,
+                                MustChangePassNow = loggedInUser.MustChangePassNow
+                            },
+                            modules = moduleCodes.ToArray()
+                        };
+                        await cc.JsonAsync(result);
                     }
-
-                    List<dynamic> roleModules =  RoleModuleService.GetListByRole(roleCodes.ToArray());
-
-                    List<string> moduleCodes = new List<string>();
-                    foreach (dynamic roleModule in roleModules)
+                    else
                     {
-                        moduleCodes.Add(roleModule.Module);
+                        await cc.JsonAsync(-1003, null, "获取当前登录用户信息失败。");
                     }
-
-                    object result = new
-                    {
-                        user = new 
-                        { 
-                            Code = loggedInUser.Code,
-                            Name = loggedInUser.Name,
-                            MustChangePassNow = loggedInUser.MustChangePassNow
-                        },
-                        modules = moduleCodes.ToArray()
-                    };
-                    await cc.JsonAsync(result);
                 }
                 else
                 {

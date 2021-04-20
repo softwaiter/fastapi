@@ -11,17 +11,16 @@ namespace CodeM.FastApi.Controllers
     {
         public async Task Handle(ControllerContext cc)
         {
-            if (cc.PostJson == null)
+            string from = cc.Headers.Get("platform", null);
+            if (cc.PostJson == null || string.IsNullOrWhiteSpace(from))
             {
-                await cc.JsonAsync(-1, null, "缺少json参数。");
+                await cc.JsonAsync(-1, null, "缺少参数。");
                 return;
             }
 
             string user = cc.PostJson.u;
             string pass = cc.PostJson.p;
-            string from = cc.PostJson.f;
-
-            if (user == null || pass == null || from == null)
+            if (user == null || pass == null)
             {
                 await cc.JsonAsync(-1, null, "无效的参数。");
                 return;
