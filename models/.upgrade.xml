@@ -11,9 +11,9 @@
         
         <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'gateway_log', '网关日志', true, false, '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'proxy_log', '代理日志', true, false, '2021-04-12', '2021-04-12');</sql>
-        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'licence2user', '产品授权给用户', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'license2user', '产品授权给用户', true, false, '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'user', '用户列表', true, false, '2021-04-12', '2021-04-12');</sql>
-        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'licence2org', '产品授权给机构', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'license2org', '产品授权给机构', true, false, '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'organization', '机构列表', true, false, '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'role', '角色管理', true, false, '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'module', '功能模块', true, false, '2021-04-12', '2021-04-12');</sql>
@@ -27,14 +27,14 @@
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'module', '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'role', '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'organization', '2021-04-12', '2021-04-12');</sql>
-        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'licence2org', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'license2org', '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'user', '2021-04-12', '2021-04-12');</sql>
-        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'licence2user', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'license2user', '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'proxy_log', '2021-04-12', '2021-04-12');</sql>
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'gateway_log', '2021-04-12', '2021-04-12');</sql>
 
         <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('user_admin', 'user', '2021-04-12', '2021-04-12');</sql>
-        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('user_admin', 'licence2user', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('user_admin', 'license2user', '2021-04-12', '2021-04-12');</sql>
 
         <sql>INSERT INTO t_organization (f_code, f_name, f_type, f_person, f_mobile, f_email, f_is_certification, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('org_laodan', 'LAODAN网关管理组', 99, '管理员', '10000000000', 'admin@sass123.net', 3, true, false, '2021-04-12', '2021-04-12');</sql>
         
