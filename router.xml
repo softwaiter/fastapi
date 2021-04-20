@@ -10,6 +10,7 @@
     <router path="/user" model="User"></router>
     <router path="/user/product" model="UserProduct"></router>
     <router path="/user/role" model="UserRole" batchAction="CR"></router>
+    <router path="/user/module" model="UserModule" batchAction="CR"></router>
     <router path="/proxy" model="Proxy"></router>
     <router path="/proxy/node" model="ProxyNode"></router>
     <router path="/proxy/reload" method="POST" handler="CodeM.FastApi.Controllers.ProxyReload.Handle" />

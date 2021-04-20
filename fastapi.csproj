@@ -38,6 +38,7 @@
         <None Remove="models\proxy.model.xml" />
         <None Remove="models\proxy_node.model.xml" />
         <None Remove="models\role_module.model.xml" />
+        <None Remove="models\user_module.model.xml" />
         <None Remove="models\user_role.model.xml" />
     </ItemGroup>
 
@@ -51,6 +52,7 @@
       <Content Include="models\proxy_node.model.xml" />
       <Content Include="models\role_module.model.xml" />
       <Content Include="models\user.model.xml" />
+      <Content Include="models\user_module.model.xml" />
       <Content Include="models\user_role.model.xml" />
     </ItemGroup>
 
