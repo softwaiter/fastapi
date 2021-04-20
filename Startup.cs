@@ -1,7 +1,6 @@
 using CodeM.Common.Tools.Json;
 using CodeM.FastApi.Config;
 using CodeM.FastApi.Logger;
-using CodeM.FastApi.Middlewares;
 using CodeM.FastApi.Router;
 using CodeM.FastApi.System.Middlewares;
 using CodeM.FastApi.System.Utils;

@@ -59,7 +59,6 @@
     <ItemGroup>
         <ProjectReference Include="libs\DbUpgrade\CodeM.FastApi.DbUpgrade.csproj" />
         <ProjectReference Include="libs\Logger\CodeM.FastApi.Logger.csproj" />
-        <ProjectReference Include="libs\Middlewares\CodeM.FastApi.Middlewares.csproj" />
         <ProjectReference Include="libs\ReverseProxy\CodeM.FastApi.ReverseProxy.csproj" />
         <ProjectReference Include="libs\Router\CodeM.FastApi.Router.csproj" />
     </ItemGroup>
