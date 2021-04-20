@@ -16,4 +16,5 @@
     <router path="/permission" model="Permission" />
     <router path="/resetpass/{userid}" method="POST" handler="CodeM.FastApi.Controllers.ResetPass.Handle" />
     <router path="/login" method="POST" handler="CodeM.FastApi.Controllers.Login.Handle" />
+    <router path="/login/user" handler="CodeM.FastApi.Controllers.LoggedInUser.Handle" />
 </routers>

@@ -11,6 +11,11 @@ namespace CodeM.FastApi.Services
             return OrmUtils.Model("User").Equals("Id", id).QueryFirst();
         }
 
+        public static dynamic GetUserByCode(string code)
+        {
+            return OrmUtils.Model("User").Equals("Code", code).QueryFirst();
+        }
+
         public static void UpdatePassword(string userId, string newPass)
         {
             dynamic updateObj = OrmUtils.Model("User").NewObject();

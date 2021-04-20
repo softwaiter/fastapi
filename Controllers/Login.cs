@@ -137,7 +137,12 @@ namespace CodeM.FastApi.Controllers
                 return;
             }
 
-            await cc.JsonAsync("成功。");
+            //todo 生成token并存储，对应user id或code
+            //toto 获取用户的时候，同时存储缓存，使用user id或code做key
+
+            cc.Session.SetString("code", userObj.Code);
+            
+            await cc.JsonAsync(cc.Session.Id);
         }
     }
 }

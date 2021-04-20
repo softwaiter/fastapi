@@ -1,3 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
+    
+    <version id="1">
+        <sql>INSERT INTO t_proxy (f_code, f_name, f_type, f_match_path, f_transform_path, f_request_timeout, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('s_laodan', 'LAODAN微服务', 0, '/', '/', 100, true, false, '2021-04-12', '2021-04-12'); </sql>
+        
+        <sql>INSERT INTO t_product (f_code, f_name, f_desc, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'LAODAN超级网关', '负责用户权限、微服务管理、日志监控和安全预警', true, false, '2021-04-12', '2021-04-12');</sql>
+        
+        <sql>INSERT INTO t_role (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'user_admin', '账号管理员', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'super_admin', '超级管理员', true, false, '2021-04-12', '2021-04-12');</sql>
+        
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'gateway_log', '网关日志', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'proxy_log', '代理日志', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'licence2user', '产品授权给用户', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'user', '用户列表', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'licence2org', '产品授权给机构', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'organization', '机构列表', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'role', '角色管理', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'module', '功能模块', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'product', '产品列表', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'permission', '权限配置', true, false, '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('laodan', 'proxy', '代理列表', true, false, '2021-04-12', '2021-04-12');</sql>
+
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'proxy', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'permission', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'product', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'module', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'role', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'organization', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'licence2org', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'user', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'licence2user', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'proxy_log', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('super_admin', 'gateway_log', '2021-04-12', '2021-04-12');</sql>
+
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('user_admin', 'user', '2021-04-12', '2021-04-12');</sql>
+        <sql>INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime) VALUES('user_admin', 'licence2user', '2021-04-12', '2021-04-12');</sql>
+
+        <sql>INSERT INTO t_organization (f_code, f_name, f_type, f_person, f_mobile, f_email, f_is_certification, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('org_laodan', 'LAODAN网关管理组', 99, '管理员', '10000000000', 'admin@sass123.net', 3, true, false, '2021-04-12', '2021-04-12');</sql>
+        
+        <sql>INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('org_laodan', 'laodan', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');</sql>
+        
+        <sql>INSERT INTO t_user (f_org_code, f_code, f_name, f_mobile, f_email, f_expires, f_salt, f_pass, f_must_changepass_now, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('org_laodan', 'admin', '管理员', '10000000000', 'admin@sass123.net', '9999-12-31', '6a4240804399a6b74866aed58b1fcfbf', '95def48b314c1db5052302278df0bfbbf9e93588a21feb6baa2dd6143e2b45cc', true, true, false, '2021-04-12', '2021-04-12');</sql>
+        
+        <sql>INSERT INTO t_user_product (f_user_code, f_prod_code, f_expires, f_actived, f_deleted, f_createtime, f_updatetime) VALUES('admin', 'laodan', '9999-12-31', true, false, '2021-04-12', '2021-04-12');</sql>
+
+        <sql>INSERT INTO t_user_role (f_user_code, f_role_code, f_createtime, f_updatetime) VALUES('admin', 'super_admin', '2021-04-12', '2021-04-12');</sql>
+    </version>
+
 </versions>

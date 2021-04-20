@@ -13,7 +13,7 @@ namespace CodeM.FastApi.Controllers
             try
             {
                 ProxyUtils.Reload();
-                await cc.JsonAsync("成功！");
+                await cc.JsonAsync("代理配置重载成功！");
             }
             catch (Exception exp)
             {
