@@ -9,10 +9,10 @@ namespace CodeM.FastApi.Controllers
     {
         public async Task Handle(ControllerContext cc)
         {
-            string token = cc.Headers.Get("token", string.Empty);
+            string token = cc.Headers.Get("Token", string.Empty);
             if (!string.IsNullOrWhiteSpace(token))
             {
-                string platform = cc.Headers.Get("platform", string.Empty);
+                string platform = cc.Headers.Get("Platform", string.Empty);
                 if (!string.IsNullOrWhiteSpace(platform))
                 {
                     string userCode = cc.Session.GetString("code");

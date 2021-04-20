@@ -11,7 +11,7 @@ namespace CodeM.FastApi.Controllers
     {
         public async Task Handle(ControllerContext cc)
         {
-            string from = cc.Headers.Get("platform", null);
+            string from = cc.Headers.Get("Platform", null);
             if (cc.PostJson == null || string.IsNullOrWhiteSpace(from))
             {
                 await cc.JsonAsync(-1, null, "缺少参数。");
