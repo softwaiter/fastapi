@@ -46,6 +46,7 @@ namespace CodeM.FastApi
                 services.AddResponseCompression();
             }
 
+            PermissionUtils.Load();
             ProxyUtils.Load(services);
 
             if (AppConfig.Session.Enable)

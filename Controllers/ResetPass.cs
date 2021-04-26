@@ -61,7 +61,7 @@ namespace CodeM.FastApi.Controllers
             catch (Exception exp)
             {
                 LogUtils.Error(exp);
-                await cc.JsonAsync("更新密码失败。");
+                await cc.JsonAsync(-1, null, "重置口令失败。");
             }
         }
     }

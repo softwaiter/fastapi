@@ -1,5 +1,6 @@
 ﻿using CodeM.FastApi.Context;
 using CodeM.FastApi.Services;
+using CodeM.FastApi.System.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,17 +10,16 @@ namespace CodeM.FastApi.Controllers
     {
         public async Task Handle(ControllerContext cc)
         {
-            string token = cc.Headers.Get("Token", string.Empty);
-            if (!string.IsNullOrWhiteSpace(token))
+            string userCode = LoginUtils.GetLoginUserCode(cc);
+            if (!string.IsNullOrWhiteSpace(userCode))
             {
-                string platform = cc.Headers.Get("Platform", string.Empty);
-                if (!string.IsNullOrWhiteSpace(platform))
+                dynamic loggedInUser = UserService.GetUserByCode(userCode);
+                if (loggedInUser != null)
                 {
-                    string userCode = cc.Session.GetString("code");
-                    if (!string.IsNullOrWhiteSpace(userCode))
+                    string error;
+                    string platform = cc.Headers.Get("Platform", string.Empty);
+                    if (LoginUtils.CheckUserValidity(loggedInUser, platform, out error))
                     {
-                        dynamic loggedInUser = UserService.GetUserByCode(userCode);
-
                         List<dynamic> userRoles = UserRoleService.GetListByUser(userCode);
 
                         List<object> roleCodes = new List<object>();
@@ -62,17 +62,18 @@ namespace CodeM.FastApi.Controllers
                     }
                     else
                     {
-                        await cc.JsonAsync(-1003, null, "获取当前登录用户信息失败。");
+                        await cc.JsonAsync(1003, null, "获取当前登录用户信息失败。");
                     }
                 }
                 else
                 {
-                    await cc.JsonAsync(-1002, null, "获取当前登录用户信息失败。");
+                    await cc.JsonAsync(1002, null, "获取当前登录用户信息失败。");
                 }
-                return;
             }
-
-            await cc.JsonAsync(-1001, null, "获取当前登录用户信息失败。");
+            else
+            {
+                await cc.JsonAsync(1001, null, "获取当前登录用户信息失败。");
+            }
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<model name="ModulePermission" table="t_module_permission">
+    <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
+    <property name="Module" field="f_module_code" type="Module" joinProp="Code" notNull="true" uniqueGroup="uc_module_proxy_permission" desc="所属模块" />
+    <property name="Proxy" field="f_proxy_code" type="Proxy" joinProp="Code" notNull="true" uniqueGroup="uc_module_proxy_permission" desc="" />
+    <property name="Permission" field="f_permission_code" type="Permission" joinProp="Code" notNull="true" uniqueGroup="uc_module_proxy_permission" desc="所属权限" />
+    <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
+    <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
+</model>

@@ -47,9 +47,16 @@ namespace CodeM.FastApi.Context
         {
             get
             {
-                if (Config.Session.Enable && mSession == null)
+                if (mSession == null)
                 {
-                    mSession = new SessionWrapper(mContext);
+                    if (Config.Session.Enable)
+                    {
+                        mSession = new SessionWrapper(mContext);
+                    }
+                    else
+                    {
+                        //TODO 直接用缓存和Header Token做Id
+                    }
                 }
                 return mSession;
             }

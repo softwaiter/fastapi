@@ -1,8 +1,7 @@
 ﻿using CodeM.Common.Orm;
 using CodeM.Common.Tools.Security;
 using CodeM.FastApi.Context;
-using CodeM.FastApi.Services;
-using System;
+using CodeM.FastApi.System.Utils;
 using System.Threading.Tasks;
 
 namespace CodeM.FastApi.Controllers
@@ -11,8 +10,7 @@ namespace CodeM.FastApi.Controllers
     {
         public async Task Handle(ControllerContext cc)
         {
-            string from = cc.Headers.Get("Platform", null);
-            if (cc.PostJson == null || string.IsNullOrWhiteSpace(from))
+            if (cc.PostJson == null)
             {
                 await cc.JsonAsync(-1, null, "缺少参数。");
                 return;
@@ -20,7 +18,8 @@ namespace CodeM.FastApi.Controllers
 
             string user = cc.PostJson.u;
             string pass = cc.PostJson.p;
-            if (user == null || pass == null)
+            if (string.IsNullOrWhiteSpace(user) || 
+                string.IsNullOrWhiteSpace(pass))
             {
                 await cc.JsonAsync(-1, null, "无效的参数。");
                 return;
@@ -35,36 +34,12 @@ namespace CodeM.FastApi.Controllers
                 await cc.JsonAsync(-1, null, "用户名或密码错误。");
                 return;
             }
-            if (!userObj.Actived)
-            {
-                await cc.JsonAsync(-1, null, "用户已禁用。");
-                return;
-            }
-            if (userObj.Deleted)
-            {
-                await cc.JsonAsync(-1, null, "用户已冻结。");
-                return;
-            }
-            if (userObj.Expires < DateTime.Now)
-            {
-                await cc.JsonAsync(-1, null, "用户使用期限已到期。");
-                return;
-            }
 
-            dynamic orgObj = OrgService.GetOrgByCode(userObj.Org);
-            if (orgObj == null)
+            string error;
+            string platform = cc.Headers.Get("Platform", null);
+            if (!LoginUtils.CheckUserValidity(userObj, platform, out error))
             {
-                await cc.JsonAsync(-1, null, "用户所属机构不存在。");
-                return;
-            }
-            if (!orgObj.Actived)
-            {
-                await cc.JsonAsync(-1, null, "用户所属机构已禁用。");
-                return;
-            }
-            if (orgObj.Deleted)
-            {
-                await cc.JsonAsync(-1, null, "用户所属机构已冻结。");
+                await cc.JsonAsync(-1, null, error);
                 return;
             }
 
@@ -75,72 +50,11 @@ namespace CodeM.FastApi.Controllers
                 return;
             }
 
-            dynamic prodObj = ProductService.GetProductByCode(from);
-            if (prodObj == null)
-            {
-                await cc.JsonAsync(-1, null, "无效的业务平台。");
-                return;
-            }
-            if (!prodObj.Actived)
-            {
-                await cc.JsonAsync(-1, null, "业务平台已禁用。");
-                return;
-            }
-            if (prodObj.Deleted)
-            {
-                await cc.JsonAsync(-1, null, "业务平台已冻结。");
-                return;
-            }
-
-            dynamic orgprodObj = OrgProdService.GetOrgProdByCode(userObj.Org, from);
-            if (orgprodObj == null)
-            {
-                await cc.JsonAsync(-1, null, "缺少业务平台权限。");
-                return;
-            }
-            if (!orgprodObj.Actived)
-            {
-                await cc.JsonAsync(-1, null, "业务平台权限已禁用。");
-                return;
-            }
-            if (orgprodObj.Deleted)
-            {
-                await cc.JsonAsync(-1, null, "业务平台权限已冻结。");
-                return;
-            }
-            if (orgprodObj.Expires < DateTime.Now)
-            {
-                await cc.JsonAsync(-1, null, "业务平台权限已到期。");
-                return;
-            }
-
-            dynamic userprodObj = UserProdService.GetUserProdByCode(userObj.Code, from);
-            if (userprodObj == null)
-            {
-                await cc.JsonAsync(-1, null, "缺少业务平台权限！");
-                return;
-            }
-            if (!userprodObj.Actived)
-            {
-                await cc.JsonAsync(-1, null, "业务平台权限已禁用！");
-                return;
-            }
-            if (userprodObj.Deleted)
-            {
-                await cc.JsonAsync(-1, null, "业务平台权限已冻结！");
-                return;
-            }
-            if (userprodObj.Expires < DateTime.Now)
-            {
-                await cc.JsonAsync(-1, null, "业务平台权限已到期！");
-                return;
-            }
-
             //todo 生成token并存储，对应user id或code
             //toto 获取用户的时候，同时存储缓存，使用user id或code做key
 
-            cc.Session.SetString("code", userObj.Code);
-            
+            LoginUtils.SetLoginUserCode(cc, userObj.Code);
+
             await cc.JsonAsync(cc.Session.Id);
         }
     }

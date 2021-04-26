@@ -3,8 +3,8 @@
     <property name="Id" field="f_id" notNull="true" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
     <property name="Proxy" field="f_proxy_code" type="Proxy" joinProp="Code" desc="接口所属代理" />
     <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="权限编码" />
-    <property name="Path" length="128" notNull="true" uniqueGroup="uc_path" joinUpdate="false" desc="接口路径" />
-    <property name="Method" type="Int16" min="0" max="3" notNull="true" desc="接口请求方法（GET，POST，PUT，DELETE）" />
+    <property name="Method" type="Int16" min="0" max="3" notNull="true" uniqueGroup="uc_method_path" desc="接口请求方法（GET，POST，PUT，DELETE）" />
+    <property name="Path" length="128" notNull="true" uniqueGroup="uc_method_path" joinUpdate="false" desc="接口路径" />
     <property name="Description" length="256" desc="接口权限描述，用户日志记录" />
     <property name="RequireLogin" field="f_require_login" type="Boolean" desc="是否需要登录" defaultValue="true" />
     <property name="SupportLoginToken" field="f_allow_login_with_token" type="Boolean" desc="是否支持即时登录令牌" defaultValue="false" />

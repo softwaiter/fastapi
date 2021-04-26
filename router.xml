@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <routers>
     <router path="/hello" handler="CodeM.FastApi.Controllers.Hello.Handle"></router>
+    <router path="/proxy" model="Proxy"></router>
+    <router path="/proxy/node" model="ProxyNode"></router>
+    <router path="/proxy/reload" method="POST" handler="CodeM.FastApi.Controllers.ProxyReload.Handle" />
+    <router path="/permission" model="Permission" />
     <router path="/product" model="Product"></router>
     <router path="/module" model="Module"></router>
+    <router path="/module/permission" model="ModulePermission" batchAction="CR"></router>
     <router path="/role" model="Role"></router>
     <router path="/role/module" model="RoleModule" batchAction="CR"></router>
     <router path="/org" model="Organization"></router>
@@ -11,11 +16,9 @@
     <router path="/user/product" model="UserProduct"></router>
     <router path="/user/role" model="UserRole" batchAction="CR"></router>
     <router path="/user/module" model="UserModule" batchAction="CR"></router>
-    <router path="/proxy" model="Proxy"></router>
-    <router path="/proxy/node" model="ProxyNode"></router>
-    <router path="/proxy/reload" method="POST" handler="CodeM.FastApi.Controllers.ProxyReload.Handle" />
-    <router path="/permission" model="Permission" />
     <router path="/resetpass/{userid}" method="POST" handler="CodeM.FastApi.Controllers.ResetPass.Handle" />
     <router path="/login" method="POST" handler="CodeM.FastApi.Controllers.Login.Handle" />
     <router path="/login/user" handler="CodeM.FastApi.Controllers.LoggedInUser.Handle" />
+    <router path="/changepass" method="POST" handler="CodeM.FastApi.Controllers.ChangePass.Handle" />
+    <router path="/logout" method="POST" handler="CodeM.FastApi.Controllers.Logout.Handle" />
 </routers>
