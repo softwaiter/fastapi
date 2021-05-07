@@ -49,7 +49,6 @@
       <Content Include="models\.connection.xml" />
       <Content Include="models\.upgrade.xml" />
       <Content Include="models\module_permission.model.xml" />
-      <Content Include="models\module_permission.xml" />
       <Content Include="models\organization.model.xml" />
       <Content Include="models\org_product.model.xml" />
       <Content Include="models\permission_data.model.xml" />
