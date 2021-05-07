@@ -79,6 +79,40 @@
 
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'permissionDataList', '/permission/data', 0, '查询数据权限列表', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'newPermissionData', '/permission/data', 1, '新建数据权限', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'updatePermissionData', '/permission/data/{id}', 2, '修改数据权限', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'deletePermissionData', '/permission/data/{id}', 3, '删除数据权限', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'permissionDataParamList', '/permission/data/param', 0, '查询数据权限参数列表', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'newPermissionDataParam', '/permission/data/param', 1, '增加数据权限参数', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'updatePermissionDataParam', '/permission/data/param/{id}', 2, '修改数据权限', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'deletePermissionDataParam', '/permission/data/param/{id}', 3, '删除数据权限', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan', 'productList', '/product', 0, '查询产品列表', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
         <sql>
@@ -384,6 +418,38 @@
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('permission', 's_laodan', 'deletePermission', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'permissionDataList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'newPermissionData', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'updatePermissionData', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'deletePermissionData', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'permissionDataParamList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'newPermissionDataParam', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'updatePermissionDataParam', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'deletePermissionDataParam', '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>

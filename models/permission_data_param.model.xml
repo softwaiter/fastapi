@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<model name="PermissionDataParam" table="t_permission_data_params">
+    <property name="Id" field="f_id" notNull="true" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
+    <property name="PermissionData" field="f_data_permission_code" type="PermissionData" joinProp="Code" notNull="true" uniqueGroup="uc_pd_key" desc="关联数据权限" />
+    <property name="Name" notNull="true" uniqueGroup="uc_pd_key" desc="参数名称" />
+    <property name="Type" type="Int16" notNull="true" defaultValue="0" desc="参数类型（0:Query, 1:Header, 2:Json, 3:Form）" />
+    <property name="Behaviour" type="Int16" notNull="true" defaultValue="0" desc="操作类型（0:Set, 1:Add, 2:Remove）" />
+    <property name="Value" desc="参数值" />
+    <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
+    <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
+</model>
