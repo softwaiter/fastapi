@@ -1,5 +1,5 @@
-﻿using CodeM.Common.Orm;
-using CodeM.FastApi.ReverseProxy;
+﻿using CodeM.FastApi.ReverseProxy;
+using CodeM.FastApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,14 +11,14 @@ namespace CodeM.FastApi.System.Utils
     {
         public static void Load(IServiceCollection services)
         {
-            List<dynamic> proxyList = OrmUtils.Model("Proxy").NotEquals("Code", "s_laodan").Equals("Actived", true).NotEquals("Deleted", true).Query();
+            List<dynamic> proxyList = ProxyService.GetEffectiveListWithoutLaodan();
             foreach (dynamic proxy in proxyList)
             {
                 ReverseProxyManager.AddProxy(proxy.Code, proxy.MatchPath, proxy.TransformMode, 
                     proxy.TransformPath, proxy.LoadBalance, TimeSpan.FromSeconds(proxy.RequestTimeout));
             }
 
-            List<dynamic> nodeList = OrmUtils.Model("ProxyNode").NotEquals("Proxy", "s_laodan").Equals("Actived", true).Query();
+            List<dynamic> nodeList = ProxyNodeService.GetEffectiveListWithoutLaodan();
             foreach (dynamic node in nodeList)
             {
                 ReverseProxyManager.AddProxyNode(node.Proxy, node.Url, node.Weight);
@@ -31,14 +31,14 @@ namespace CodeM.FastApi.System.Utils
         {
             ReverseProxyManager.Clear();
 
-            List<dynamic> result = OrmUtils.Model("Proxy").Equals("Actived", true).NotEquals("Deleted", true).Query();
+            List<dynamic> result = ProxyService.GetEffectiveListWithoutLaodan();
             foreach (dynamic proxy in result)
             {
                 ReverseProxyManager.AddProxy(proxy.Code, proxy.MatchPath, proxy.TransformMode,
                     proxy.TransformPath, proxy.LoadBalance, TimeSpan.FromSeconds(proxy.RequestTimeout));
             }
 
-            List<dynamic> nodeList = OrmUtils.Model("ProxyNode").Equals("Actived", true).Query();
+            List<dynamic> nodeList = ProxyNodeService.GetEffectiveListWithoutLaodan();
             foreach (dynamic node in nodeList)
             {
                 ReverseProxyManager.AddProxyNode(node.Proxy, node.Url, node.Weight);

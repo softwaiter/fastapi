@@ -10,5 +10,15 @@ namespace CodeM.FastApi.Services
             List<dynamic> result = OrmUtils.Model("RoleModule").In("Role", roleCodes).Query();
             return result;
         }
+
+        public static List<dynamic> GetEffectiveListByModule(params string[] moduleCodes)
+        {
+            List<dynamic> result = OrmUtils.Model("RoleModule")
+                .In("Module", moduleCodes)
+                .Equals("Role.Actived", true)
+                .Equals("Role.Deleted", false)
+                .Query();
+            return result;
+        }
     }
 }

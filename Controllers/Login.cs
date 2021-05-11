@@ -1,6 +1,6 @@
-﻿using CodeM.Common.Orm;
-using CodeM.Common.Tools.Security;
+﻿using CodeM.Common.Tools.Security;
 using CodeM.FastApi.Context;
+using CodeM.FastApi.Services;
 using CodeM.FastApi.System.Utils;
 using System.Threading.Tasks;
 
@@ -25,10 +25,7 @@ namespace CodeM.FastApi.Controllers
                 return;
             }
 
-            dynamic userObj = OrmUtils.Model("User").Equals("Code", user)
-                .Or(new SubFilter().Equals("Mobile", user))
-                .Or(new SubFilter().Equals("Email", user))
-                .QueryFirst();
+            dynamic userObj = UserService.FindUser(user);
             if (userObj == null)
             {
                 await cc.JsonAsync(-1, null, "用户名或密码错误。");

@@ -1,5 +1,4 @@
 ﻿using CodeM.FastApi.Context;
-using CodeM.FastApi.Logger;
 using CodeM.FastApi.System.Utils;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace CodeM.FastApi.Controllers
             }
             catch (Exception exp)
             {
-                LogUtils.Error(exp);
+                cc.Error(exp);
                 await cc.JsonAsync("代理重新加载失败。");
             }
         }

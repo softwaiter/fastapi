@@ -23,4 +23,7 @@
     <router path="/login/user" handler="CodeM.FastApi.Controllers.LoggedInUser.Handle" />
     <router path="/changepass" method="POST" handler="CodeM.FastApi.Controllers.ChangePass.Handle" />
     <router path="/logout" method="POST" handler="CodeM.FastApi.Controllers.Logout.Handle" />
+
+    <router path="/account/register" method="POST" handler="CodeM.FastApi.Controllers.RegisterSassAccount.Handle" />
+    <!--forgetpass-->
 </routers>

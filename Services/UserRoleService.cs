@@ -10,5 +10,14 @@ namespace CodeM.FastApi.Services
             List<dynamic> result = OrmUtils.Model("UserRole").Equals("User", userCode).Query();
             return result;
         }
+
+        public static long GetUserRoleCount(string userCode, params string[] roleCodes)
+        {
+            long count = OrmUtils.Model("UserRole")
+                .Equals("User", userCode)
+                .In("Role", roleCodes)
+                .Count();
+            return count;
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using CodeM.Common.Tools.Security;
 using CodeM.FastApi.Context;
-using CodeM.FastApi.Logger;
 using CodeM.FastApi.Services;
 using CodeM.FastApi.System.Utils;
 using System;
@@ -54,7 +53,7 @@ namespace CodeM.FastApi.Controllers
             }
             catch (Exception exp)
             {
-                LogUtils.Error(exp);
+                cc.Error(exp);
                 await cc.JsonAsync(-1, null, "修改密码失败。");
             }
         }

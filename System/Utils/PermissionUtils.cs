@@ -1,4 +1,4 @@
-﻿using CodeM.Common.Orm;
+﻿using CodeM.FastApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Routing.Patterns;
@@ -22,7 +22,7 @@ namespace CodeM.FastApi.System.Utils
 
         public static void Load()
         {
-            List<dynamic> permissions = OrmUtils.Model("Permission").Equals("Actived", true).Equals("Deleted", false).Query();
+            List<dynamic> permissions = PermissionService.GetEffectiveList();
             permissions.Sort((left, right) =>
             {
                 if (left.Path.Length > right.Path.Length)
@@ -79,11 +79,7 @@ namespace CodeM.FastApi.System.Utils
 
         public static bool HasPermission(string userCode, string permissionCode)
         {
-            List<dynamic> modulePermissions = OrmUtils.Model("ModulePermission")
-                .Equals("Permission", permissionCode)
-                .Equals("Module.Actived", true)
-                .Equals("Module.Deleted", false)
-                .Query();
+            List<dynamic> modulePermissions = ModulePermissionService.GetEffectiveListByPermission(permissionCode);
             List<string> moduleCodes = new List<string>();
             modulePermissions.ForEach(item =>
             {
@@ -94,17 +90,10 @@ namespace CodeM.FastApi.System.Utils
 
             if (moduleCodes.Count > 0)
             {
-                count = OrmUtils.Model("UserModule")
-                    .Equals("User", userCode)
-                    .In("Module", moduleCodes.ToArray())
-                    .Count();
+                count = UserModuleService.GetUserModuleCount(userCode, moduleCodes.ToArray());
                 if (count == 0)
                 {
-                    List<dynamic> roleModules = OrmUtils.Model("RoleModule")
-                        .In("Module", moduleCodes.ToArray())
-                        .Equals("Role.Actived", true)
-                        .Equals("Role.Deleted", false)
-                        .Query();
+                    List<dynamic> roleModules = RoleModuleService.GetEffectiveListByModule(moduleCodes.ToArray());
                     List<string> roleCodes = new List<string>();
                     roleModules.ForEach(item =>
                     {
@@ -113,10 +102,7 @@ namespace CodeM.FastApi.System.Utils
 
                     if (roleCodes.Count > 0)
                     {
-                        count = OrmUtils.Model("UserRole")
-                            .Equals("User", userCode)
-                            .In("Role", roleCodes.ToArray())
-                            .Count();
+                        count = UserRoleService.GetUserRoleCount(userCode, roleCodes.ToArray());
                     }
                 }
             }
