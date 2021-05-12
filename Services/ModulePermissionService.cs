@@ -14,5 +14,16 @@ namespace CodeM.FastApi.Services
                 .Query();
             return result;
         }
+
+        public static List<dynamic> GetEffectiveListByProductAndPermission(string prodCode, string permissionCode)
+        {
+            List<dynamic> result = OrmUtils.Model("ModulePermission")
+                .Equals("Module.Product", prodCode)
+                .Equals("Permission", permissionCode)
+                .Equals("Module.Actived", true)
+                .Equals("Module.Deleted", false)
+                .Query();
+            return result;
+        }
     }
 }

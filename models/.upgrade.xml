@@ -1,5 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
+
+    <version id="2">
+        <sql>
+            INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'Saas管理控制台', true, 90, 10, false, '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_basic', '基础功能', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_product', '产品服务', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_user', '用户中心', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_order', '工单管理', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_fee', '费用账单', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_log', '日志中心', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_basic', 's_laodan', 'loggedinUserInfo', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_basic', 's_laodan', 'changePass', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_basic', 's_laodan', 'logout', '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'userList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'newUser', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'updateUser', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'deleteUser', '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('org_laodan', 'queen', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_user_product (f_user_code, f_prod_code, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('admin', 'queen', '9999-12-31', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_user_module(f_user_code, f_prod_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('admin', 'queen', 'q_basic', '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_user_module(f_user_code, f_prod_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('admin', 'queen', 'q_user', '2021-04-12', '2021-04-12')
+        </sql>
+    </version>
     
     <version id="1">
         <sql>
@@ -746,7 +827,7 @@
         
         <sql>
             INSERT INTO t_user (f_org_code, f_code, f_name, f_mobile, f_email, f_expires, f_salt, f_pass, f_must_changepass_now, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('org_laodan', 'admin', '管理员', '10000000000', 'admin@sass123.net', '9999-12-31', '6a4240804399a6b74866aed58b1fcfbf', '95def48b314c1db5052302278df0bfbbf9e93588a21feb6baa2dd6143e2b45cc', true, true, false, '2021-04-12', '2021-04-12');
+            VALUES('org_laodan', 'admin', '管理员', '10000000000', 'admin@sass123.net', '9999-12-31', '6a4240804399a6b74866aed58b1fcfbf', '95def48b314c1db5052302278df0bfbbf9e93588a21feb6baa2dd6143e2b45cc', false, true, false, '2021-04-12', '2021-04-12');
         </sql>
         
         <sql>

@@ -54,61 +54,61 @@ namespace CodeM.FastApi.System.Utils
             dynamic prodObj = ProductService.GetProductByCode(platform);
             if (prodObj == null)
             {
-                error = "无效的业务平台。";
+                error = "不识别的应用系统。";
                 return false;
             }
             if (!prodObj.Actived)
             {
-                error = "业务平台已禁用。";
+                error = "应用系统已禁用。";
                 return false;
             }
             if (prodObj.Deleted)
             {
-                error = "业务平台已冻结。";
+                error = "应用系统已冻结。";
                 return false;
             }
 
             dynamic orgprodObj = OrgProdService.GetOrgProdByCode(userObj.Org, platform);
             if (orgprodObj == null)
             {
-                error = "缺少业务平台权限。";
+                error = "缺少应用系统权限。";
                 return false;
             }
             if (!orgprodObj.Actived)
             {
-                error = "业务平台权限已禁用。";
+                error = "应用系统权限已禁用。";
                 return false;
             }
             if (orgprodObj.Deleted)
             {
-                error = "业务平台权限已冻结。";
+                error = "应用系统权限已冻结。";
                 return false;
             }
             if (orgprodObj.Expires < DateTime.Now)
             {
-                error = "业务平台权限已到期。";
+                error = "应用系统权限已到期。";
                 return false;
             }
 
             dynamic userprodObj = UserProdService.GetUserProdByCode(userObj.Code, platform);
             if (userprodObj == null)
             {
-                error = "缺少业务平台权限！";
+                error = "缺少应用系统权限！";
                 return false;
             }
             if (!userprodObj.Actived)
             {
-                error = "业务平台权限已禁用！";
+                error = "应用系统权限已禁用！";
                 return false;
             }
             if (userprodObj.Deleted)
             {
-                error = "业务平台权限已冻结！";
+                error = "应用系统权限已冻结！";
                 return false;
             }
             if (userprodObj.Expires < DateTime.Now)
             {
-                error = "业务平台权限已到期！";
+                error = "应用系统权限已到期！";
                 return false;
             }
 

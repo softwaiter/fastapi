@@ -48,7 +48,7 @@ namespace CodeM.FastApi.Controllers
 
             try
             {
-                UserService.UpdatePassword(userObj.Id + "", newPass);
+                UserService.UpdatePassword(userObj.Id + "", newPass, false);
                 await cc.JsonAsync("修改密码成功！");
             }
             catch (Exception exp)

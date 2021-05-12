@@ -3,6 +3,7 @@ using CodeM.FastApi.Context;
 using CodeM.FastApi.Services;
 using CodeM.FastApi.System.Utils;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace CodeM.FastApi.System.Middlewares
@@ -48,6 +49,14 @@ namespace CodeM.FastApi.System.Middlewares
                         return;
                     }
 
+                    if (userObj.MustChangePassNow && 
+                        !("/login/user".Equals(cc.Request.Path, StringComparison.OrdinalIgnoreCase) ||
+                        "/changepass".Equals(cc.Request.Path, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        await cc.JsonAsync(2002, null, "请修改登录密码，再继续操作。");
+                        return;
+                    }
+
                     //用户是否合法
                     string error;
                     string platform = cc.Headers.Get("Platform", string.Empty);
@@ -58,9 +67,10 @@ namespace CodeM.FastApi.System.Middlewares
                     }
 
                     //用户是否拥有权限
-                    if (!PermissionUtils.HasPermission(userCode, permission.Code))
+                    if (!PermissionUtils.HasPermission(userCode, platform, permission.Code))
                     {
                         cc.State = 401;
+                        return;
                     }
                 }
 

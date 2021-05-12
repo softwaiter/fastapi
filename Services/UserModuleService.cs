@@ -5,11 +5,13 @@ namespace CodeM.FastApi.Services
 {
     public class UserModuleService
     {
-        public static List<dynamic> GetListByUserProduct(string userCode, string prodCode)
+        public static List<dynamic> GetEffectiveListByUserAndProduct(string userCode, string prodCode)
         {
             List<dynamic> result = OrmUtils.Model("UserModule")
                 .Equals("User", userCode)
                 .Equals("Product", prodCode)
+                .Equals("Module.Actived", true)
+                .Equals("Module.Deleted", false)
                 .Query();
             return result;
         }

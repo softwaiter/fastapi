@@ -5,9 +5,13 @@ namespace CodeM.FastApi.Services
 {
     public class RoleModuleService
     {
-        public static List<dynamic> GetListByRole(params object[] roleCodes)
+        public static List<dynamic> GetEffectiveListByRole(params object[] roleCodes)
         {
-            List<dynamic> result = OrmUtils.Model("RoleModule").In("Role", roleCodes).Query();
+            List<dynamic> result = OrmUtils.Model("RoleModule")
+                .In("Role", roleCodes)
+                .Equals("Module.Actived", true)
+                .Equals("Module.Deleted", false)
+                .Query();
             return result;
         }
 

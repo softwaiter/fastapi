@@ -5,9 +5,14 @@ namespace CodeM.FastApi.Services
 {
     public class UserRoleService
     {
-        public static List<dynamic> GetListByUser(string userCode)
+        public static List<dynamic> GetEffectiveListByUserAndProduct(string userCode, string prodCode)
         {
-            List<dynamic> result = OrmUtils.Model("UserRole").Equals("User", userCode).Query();
+            List<dynamic> result = OrmUtils.Model("UserRole")
+                .Equals("User", userCode)
+                .Equals("Role.Product", prodCode)
+                .Equals("Role.Actived", true)
+                .Equals("Role.Deleted", false)
+                .Query();
             return result;
         }
 

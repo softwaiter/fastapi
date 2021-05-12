@@ -20,7 +20,7 @@ namespace CodeM.FastApi.Controllers
                     string platform = cc.Headers.Get("Platform", string.Empty);
                     if (LoginUtils.CheckUserValidity(loggedInUser, platform, out error))
                     {
-                        List<dynamic> userRoles = UserRoleService.GetListByUser(userCode);
+                        List<dynamic> userRoles = UserRoleService.GetEffectiveListByUserAndProduct(userCode, platform);
 
                         List<object> roleCodes = new List<object>();
                         foreach (dynamic userRole in userRoles)
@@ -30,7 +30,7 @@ namespace CodeM.FastApi.Controllers
 
                         List<string> moduleCodes = new List<string>();
 
-                        List<dynamic> roleModules = RoleModuleService.GetListByRole(roleCodes.ToArray());
+                        List<dynamic> roleModules = RoleModuleService.GetEffectiveListByRole(roleCodes.ToArray());
                         foreach (dynamic roleModule in roleModules)
                         {
                             if (!moduleCodes.Contains(roleModule.Module))
@@ -39,7 +39,7 @@ namespace CodeM.FastApi.Controllers
                             }
                         }
 
-                        List<dynamic> userModules = UserModuleService.GetListByUserProduct(userCode, platform);
+                        List<dynamic> userModules = UserModuleService.GetEffectiveListByUserAndProduct(userCode, platform);
                         foreach (dynamic userModule in userModules)
                         {
                             if (!moduleCodes.Contains(userModule.Module))

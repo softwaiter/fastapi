@@ -77,9 +77,9 @@ namespace CodeM.FastApi.System.Utils
             return result;
         }
 
-        public static bool HasPermission(string userCode, string permissionCode)
+        public static bool HasPermission(string userCode, string platform, string permissionCode)
         {
-            List<dynamic> modulePermissions = ModulePermissionService.GetEffectiveListByPermission(permissionCode);
+            List<dynamic> modulePermissions = ModulePermissionService.GetEffectiveListByProductAndPermission(platform, permissionCode);
             List<string> moduleCodes = new List<string>();
             modulePermissions.ForEach(item =>
             {

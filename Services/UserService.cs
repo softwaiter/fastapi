@@ -35,13 +35,13 @@ namespace CodeM.FastApi.Services
             return result;
         }
 
-        public static void UpdatePassword(string userId, string newPass)
+        public static void UpdatePassword(string userId, string newPass, bool mustChangePassNext)
         {
             dynamic updateObj = OrmUtils.Model("User").NewObject();
             updateObj.Id = userId;
             updateObj.Salt = HashUtils.MD5(Guid.NewGuid().ToString());
             updateObj.Password = HashUtils.SHA256(newPass + updateObj.Salt);
-            updateObj.MustChangePassNow = true;
+            updateObj.MustChangePassNow = mustChangePassNext;
             OrmUtils.Model("User").Equals("Id", userId).SetValues(updateObj).Update();
         }
     }
