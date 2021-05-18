@@ -1,14 +1,21 @@
 ﻿using CodeM.FastApi.Services;
+using CSScriptLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.AspNetCore.Routing.Template;
+using System;
 using System.Collections.Generic;
 
 namespace CodeM.FastApi.System.Utils
 {
     public class PermissionUtils
     {
+        /// <summary>
+        /// 数据权限参数值表达式
+        /// </summary>
+        private static Dictionary<string, dynamic> sPermissionDataParamValueExprs = new Dictionary<string, dynamic>();
+
         private class Permission
         {
             public TemplateMatcher Matcher { get; set; }
@@ -56,7 +63,20 @@ namespace CodeM.FastApi.System.Utils
                 });
             });
 
+            Dictionary<string, dynamic> _temp2 = new Dictionary<string, dynamic>();
+            List<dynamic> permissionDataParams = PermissionDataParamService.GetListWithActivedPermissionData();
+            permissionDataParams.ForEach(item =>
+            {
+                dynamic caller = CSScript.Evaluator.LoadMethod(@"
+                                                         public string Execute(dynamic source, dynamic global) {" +
+                                                            string.Concat("return ", item.Value, ";") +
+                                                         "}");
+                string key = GetDataPermissionParamKey(item);
+                _temp2.Add(key, caller);
+            });
+
             sPermissions = _temp;
+            sPermissionDataParamValueExprs = _temp2;
         }
 
         public static dynamic GetPermission(HttpRequest req)
@@ -108,6 +128,27 @@ namespace CodeM.FastApi.System.Utils
             }
 
             return count > 0;
+        }
+
+        private static string GetDataPermissionParamKey(dynamic item)
+        {
+            return string.Concat(item.PermissionData, "_", item.Name);
+        }
+
+        public static dynamic ExecDataPermissionParamValue(string key)
+        {
+            dynamic value;
+            if (sPermissionDataParamValueExprs.TryGetValue(key, out value))
+            {
+                return value;
+            }
+            throw new Exception(string.Concat("参数表达式未找到: ", key));
+        }
+
+        public static dynamic ExecDataPermissionParamValue(dynamic item)
+        {
+            string key = GetDataPermissionParamKey(item);
+            return ExecDataPermissionParamValue(key);
         }
 
     }

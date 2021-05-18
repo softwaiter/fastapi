@@ -532,6 +532,14 @@
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('permission', 's_laodan', 'deletePermissionDataParam', '2021-04-12', '2021-04-12');
         </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'roleList', '2021-04-12', '2021-04-12');
+        </sql>
 
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)

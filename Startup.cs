@@ -111,6 +111,8 @@ namespace CodeM.FastApi
 
                 app.UseMiddleware<PermissionMiddleware>(AppConfig);
 
+                app.UseMiddleware<DataParamMiddleware>(AppConfig);
+
                 string routerFile = Path.Combine(env.ContentRootPath, "router.xml");
                 RouterManager.Current.Init(AppConfig, routerFile);
                 RouterManager.Current.MountRouters(app);

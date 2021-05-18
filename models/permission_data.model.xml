@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <model name="PermissionData" table="t_permission_data">
     <property name="Id" field="f_id" notNull="true" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
-    <property name="Permission" field="f_permission_code" type="Permission" joinProp="Code" notNull="true" uniqueGroup="uc_permission_role" desc="关联权限" />
-    <property name="Role" field="f_role_code" type="Role" joinProp="Code" notNull="true" uniqueGroup="uc_permission_role" desc="匹配角色" />
     <property name="Code" field="f_code" length="32" notNull="true" uniqueGroup="uc_code" joinUpdate="false" desc="数据权限编码" />"
+    <property name="UnionIdent" field="f_union_ident" length="128" notNull="true" uniqueGroup="uc_unionident" desc="唯一标识，由权限、产品、功能、角色组合而成" />
+    <property name="Permission" field="f_permission_code" type="Permission" joinProp="Code" notNull="true" indexGroup="idx_perm_prod_mod_role" desc="关联权限" />
+    <property name="Product" field="f_prod_code" type="Product" joinProp="Code" notNull="true" indexGroup="idx_perm_prod_mod_role" desc="匹配产品" />
+    <property name="Module" field="f_module_code" type="Module" joinProp="Code" indexGroup="idx_perm_prod_mod_role" desc="匹配功能模块" />
+    <property name="Role" field="f_role_code" type="Role" joinProp="Code" indexGroup="idx_perm_prod_mod_role" desc="匹配角色" />
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
