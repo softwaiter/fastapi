@@ -7,6 +7,7 @@
     <router path="/permission" model="Permission" />
     <router path="/permission/data" model="PermissionData" />
     <router path="/permission/data/param" model="PermissionDataParam" />
+    <router path="/permission/reload" handler="CodeM.FastApi.Controllers.PermissionReload.Handle" />
     <router path="/product" model="Product"></router>
     <router path="/module" model="Module"></router>
     <router path="/module/permission" model="ModulePermission" batchAction="CR"></router>

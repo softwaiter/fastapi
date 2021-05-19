@@ -65,7 +65,7 @@ namespace CodeM.FastApi.System.Middlewares
                     paramSettings.ForEach(item =>
                     {
                         RequestParamUtils.ProcessParam(context, item.Type, item.Behaviour, item.Name,
-                            PermissionUtils.ExecDataPermissionParamValue(item.Value));
+                            PermissionUtils.ExecDataPermissionParamValue(item));
                     });
                 }
             }

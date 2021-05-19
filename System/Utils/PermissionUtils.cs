@@ -79,6 +79,11 @@ namespace CodeM.FastApi.System.Utils
             sPermissionDataParamValueExprs = _temp2;
         }
 
+        public static void Reload()
+        {
+            Load();
+        }
+
         public static dynamic GetPermission(HttpRequest req)
         {
             dynamic result = null;
@@ -135,20 +140,15 @@ namespace CodeM.FastApi.System.Utils
             return string.Concat(item.PermissionData, "_", item.Name);
         }
 
-        public static dynamic ExecDataPermissionParamValue(string key)
+        public static dynamic ExecDataPermissionParamValue(dynamic item)
         {
+            string key = GetDataPermissionParamKey(item);
             dynamic value;
             if (sPermissionDataParamValueExprs.TryGetValue(key, out value))
             {
                 return value;
             }
             throw new Exception(string.Concat("参数表达式未找到: ", key));
-        }
-
-        public static dynamic ExecDataPermissionParamValue(dynamic item)
-        {
-            string key = GetDataPermissionParamKey(item);
-            return ExecDataPermissionParamValue(key);
         }
 
     }
