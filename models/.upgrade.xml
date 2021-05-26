@@ -4,7 +4,7 @@
     <version id="2">
         <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('queen', 'Saas管理控制台', true, 90, 10, false, '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
+            VALUES('queen', 'Saas管理控制台', true, 90, 10, true, '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
@@ -47,6 +47,11 @@
 
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_product', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_user', 's_laodan', 'userList', '2021-04-12', '2021-04-12');
         </sql>
         <sql>
@@ -60,6 +65,89 @@
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_user', 's_laodan', 'deleteUser', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'resetUserPass', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'userProductList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'addUserProduct', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'updateUserProduct', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'deleteUserProduct', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'moduleList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'userModuleList', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'addUserModule', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'removeUserModule', '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_userList_pd_1621936737599', 'userListqueen', 'userList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_userList_pd_1621936746153', 'userListqueenq_user', 'userList', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_userList_pd_1621936746153', 'where', 0, 0, '"(" + oldData + ") and org=" + globalData.Org.Code', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_newUser_pd_1621936539116', 'newUserqueen', 'newUser', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_newUser_pd_1621936610389', 'newUserqueenq_user', 'newUser', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_newUser_pd_1621936610389', 'Org', 2, 0, 'globalData.Org.Code', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_updateUser_pd_1621941251606', 'updateUserqueen', 'updateUser', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_updateUser_pd_1621992555494', 'updateUserqueenq_user', 'updateUser', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_updateUser_pd_1621992555494', 'Org', 2, 2, '', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_deleteUser_pd_1621992987913', 'deleteUserqueen', 'deleteUser', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
@@ -156,6 +244,10 @@
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan', 'deletePermission', '/permission/{id}', 3, '删除权限', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'permissionReload', '/permission/reload', 1, '权限热更新', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
 
         <sql>
@@ -499,6 +591,10 @@
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('permission', 's_laodan', 'deletePermission', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('permission', 's_laodan', 'permissionReload', '2021-04-12', '2021-04-12');
         </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)

@@ -17,7 +17,7 @@ namespace CodeM.FastApi.Controllers
             catch (Exception exp)
             {
                 cc.Error(exp);
-                await cc.JsonAsync("权限设置重新加载失败。");
+                await cc.JsonAsync(-1, null, "权限设置重新加载失败。");
             }
         }
     }

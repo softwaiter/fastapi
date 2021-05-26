@@ -61,11 +61,16 @@ namespace CodeM.FastApi.System.Middlewares
                 dynamic permissionData = PermissionDataService.GetEffectiveFirstByUnionIdent(unionIdents.ToArray());
                 if (permissionData != null)
                 {
+                    if (permissionData.IsOutOfRange)
+                    {
+                        cc.State = 416; // 超过数据服务范围
+                        return;
+                    }
+
                     List<dynamic> paramSettings = PermissionDataParamService.GetListByPermissionData(permissionData.Code);
                     paramSettings.ForEach(item =>
                     {
-                        RequestParamUtils.ProcessParam(context, item.Type, item.Behaviour, item.Name,
-                            PermissionUtils.ExecDataPermissionParamValue(item));
+                        RequestParamUtils.ProcessParam(cc, item);
                     });
                 }
             }

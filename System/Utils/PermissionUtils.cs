@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.AspNetCore.Routing.Template;
 using System;
 using System.Collections.Generic;
+//using CodeM.Common.Orm.Serialize.ModelObject;
 
 namespace CodeM.FastApi.System.Utils
 {
@@ -67,12 +68,15 @@ namespace CodeM.FastApi.System.Utils
             List<dynamic> permissionDataParams = PermissionDataParamService.GetListWithActivedPermissionData();
             permissionDataParams.ForEach(item =>
             {
-                dynamic caller = CSScript.Evaluator.LoadMethod(@"
-                                                         public string Execute(dynamic source, dynamic global) {" +
-                                                            string.Concat("return ", item.Value, ";") +
-                                                         "}");
-                string key = GetDataPermissionParamKey(item);
-                _temp2.Add(key, caller);
+                if (!string.IsNullOrWhiteSpace(item.Value))
+                {
+                    dynamic expr = CSScript.Evaluator.LoadMethod(@"
+                                                         public string Call(dynamic oldData, dynamic globalData) {" +
+                                                                string.Concat("return ", item.Value, ";") +
+                                                             "}");
+                    string key = GetDataPermissionParamKey(item);
+                    _temp2.Add(key, expr);
+                }
             });
 
             sPermissions = _temp;
@@ -137,16 +141,23 @@ namespace CodeM.FastApi.System.Utils
 
         private static string GetDataPermissionParamKey(dynamic item)
         {
-            return string.Concat(item.PermissionData, "_", item.Name);
+            return GetDataPermissionParamKey(item.PermissionData, item.Name);
         }
 
-        public static dynamic ExecDataPermissionParamValue(dynamic item)
+        private static string GetDataPermissionParamKey(string permissionDataCode,
+            string permissionDataParamName)
         {
-            string key = GetDataPermissionParamKey(item);
-            dynamic value;
-            if (sPermissionDataParamValueExprs.TryGetValue(key, out value))
+            return string.Concat(permissionDataCode, "_", permissionDataParamName);
+        }
+
+        public static dynamic ExecDataPermissionParamValue(string permissionDataCode, 
+            string permissionDataParamName, dynamic oldData, dynamic globalData)
+        {
+            string key = GetDataPermissionParamKey(permissionDataCode, permissionDataParamName);
+            dynamic expr;
+            if (sPermissionDataParamValueExprs.TryGetValue(key, out expr))
             {
-                return value;
+                return expr.Call(oldData, globalData);
             }
             throw new Exception(string.Concat("参数表达式未找到: ", key));
         }
