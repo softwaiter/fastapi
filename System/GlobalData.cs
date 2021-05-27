@@ -1,4 +1,6 @@
-﻿namespace CodeM.FastApi.System
+﻿using CodeM.FastApi.Services;
+
+namespace CodeM.FastApi.System
 {
     public class GlobalData
     {
@@ -15,5 +17,10 @@
         public dynamic User { get; set; } = null;
 
         public dynamic Org { get; set; } = null;
+
+        public dynamic GetUserByCode(string code)
+        {
+            return UserService.GetUserByCode(code);
+        }
     }
 }

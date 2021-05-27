@@ -3,8 +3,11 @@ using CodeM.FastApi.Context;
 using CodeM.FastApi.Services;
 using CodeM.FastApi.System.Utils;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Routing;
 
 namespace CodeM.FastApi.System.Middlewares
 {
@@ -65,6 +68,28 @@ namespace CodeM.FastApi.System.Middlewares
                     {
                         cc.State = 416; // 超过数据服务范围
                         return;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(permissionData.CheckRules))
+                    {
+                        dynamic user = null;
+                        dynamic org = null;
+                        string userCode = LoginUtils.GetLoginUserCode(cc);
+                        if (userCode != null)
+                        {
+                            user = UserService.GetUserByCode(userCode);
+                            org = OrgService.GetOrgByCode(user.Org);
+                        }
+
+                        dynamic globalData = new GlobalData(user, org);
+
+                        string userId = cc.RouteParams["id"];
+                        Console.WriteLine(userId);
+                        if (!PermissionUtils.CheckPermissionDataRule(permissionData.UnionIdent, cc, globalData))
+                        {
+                            cc.State = 416;
+                            return;
+                        }
                     }
 
                     List<dynamic> paramSettings = PermissionDataParamService.GetListByPermissionData(permissionData.Code);

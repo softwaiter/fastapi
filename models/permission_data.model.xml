@@ -7,6 +7,7 @@
     <property name="Product" field="f_prod_code" type="Product" joinProp="Code" notNull="true" indexGroup="idx_perm_prod_mod_role" desc="匹配产品" />
     <property name="Module" field="f_module_code" type="Module" joinProp="Code" indexGroup="idx_perm_prod_mod_role" desc="匹配功能模块" />
     <property name="Role" field="f_role_code" type="Role" joinProp="Code" indexGroup="idx_perm_prod_mod_role" desc="匹配角色" />
+    <property name="CheckRules" length="512" desc="逻辑判断代码（是否有该数据权限的逻辑开关）" />
     <property name="IsOutOfRange" field="f_out_of_range" type="Boolean" desc="超出数据服务范围" defaultValue="false" />
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />

@@ -1,4 +1,5 @@
-﻿using CodeM.FastApi.Services;
+﻿using CodeM.FastApi.Context;
+using CodeM.FastApi.Services;
 using CSScriptLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -12,19 +13,26 @@ namespace CodeM.FastApi.System.Utils
 {
     public class PermissionUtils
     {
-        /// <summary>
-        /// 数据权限参数值表达式
-        /// </summary>
-        private static Dictionary<string, dynamic> sPermissionDataParamValueExprs = new Dictionary<string, dynamic>();
-
         private class Permission
         {
             public TemplateMatcher Matcher { get; set; }
 
             public dynamic Settings { get; set; }
         }
-
         private static Dictionary<string, List<Permission>> sPermissions = new Dictionary<string, List<Permission>>();
+
+        private static Dictionary<string, dynamic> sPathPermissionCaches = new Dictionary<string, dynamic>();
+
+
+        /// <summary>
+        /// 数据权限规则判断函数
+        /// </summary>
+        private static Dictionary<string, dynamic> sPermissionDataRules = new Dictionary<string, dynamic>();
+
+        /// <summary>
+        /// 数据权限参数值表达式
+        /// </summary>
+        private static Dictionary<string, dynamic> sPermissionDataParamValueExprs = new Dictionary<string, dynamic>();
 
         private static string[] sMethods = new string[] { "GET", "POST", "PUT", "DELETE" };
 
@@ -65,6 +73,21 @@ namespace CodeM.FastApi.System.Utils
             });
 
             Dictionary<string, dynamic> _temp2 = new Dictionary<string, dynamic>();
+            List<dynamic> permissionDatas = PermissionDataService.GetEffectiveList();
+            permissionDatas.ForEach(item =>
+            {
+                if (!string.IsNullOrWhiteSpace(item.CheckRules))
+                {
+                    dynamic expr = CSScript.Evaluator.LoadMethod(@"
+                                                        using CodeM.FastApi.Context;
+                                                        public bool Check(ControllerContext cc, dynamic globalData) {" +
+                                                        item.CheckRules +
+                                                        "}");
+                    _temp2.Add(item.UnionIdent, expr);
+                }
+            });
+
+            Dictionary<string, dynamic> _temp3 = new Dictionary<string, dynamic>();
             List<dynamic> permissionDataParams = PermissionDataParamService.GetListWithActivedPermissionData();
             permissionDataParams.ForEach(item =>
             {
@@ -75,12 +98,15 @@ namespace CodeM.FastApi.System.Utils
                                                                 string.Concat("return ", item.Value, ";") +
                                                              "}");
                     string key = GetDataPermissionParamKey(item);
-                    _temp2.Add(key, expr);
+                    _temp3.Add(key, expr);
                 }
             });
 
             sPermissions = _temp;
-            sPermissionDataParamValueExprs = _temp2;
+            sPermissionDataRules = _temp2;
+            sPermissionDataParamValueExprs = _temp3;
+
+            sPathPermissionCaches = new Dictionary<string, dynamic>();
         }
 
         public static void Reload()
@@ -90,6 +116,12 @@ namespace CodeM.FastApi.System.Utils
 
         public static dynamic GetPermission(HttpRequest req)
         {
+            string key = string.Concat(req.Method, "_", req.Path);
+            if (sPathPermissionCaches.ContainsKey(key))
+            {
+                return sPathPermissionCaches[key];
+            }
+
             dynamic result = null;
             if (sPermissions.ContainsKey(req.Method))
             {
@@ -103,6 +135,8 @@ namespace CodeM.FastApi.System.Utils
                     }
                 });
             }
+
+            sPathPermissionCaches[key] = result;
             return result;
         }
 
@@ -148,6 +182,17 @@ namespace CodeM.FastApi.System.Utils
             string permissionDataParamName)
         {
             return string.Concat(permissionDataCode, "_", permissionDataParamName);
+        }
+
+        public static bool CheckPermissionDataRule(string pdUnionIdent,
+            ControllerContext cc, dynamic globalData)
+        {
+            dynamic expr;
+            if (sPermissionDataRules.TryGetValue(pdUnionIdent, out expr))
+            {
+                return expr.Check(cc, globalData);
+            }
+            return false;
         }
 
         public static dynamic ExecDataPermissionParamValue(string permissionDataCode, 

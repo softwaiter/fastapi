@@ -103,7 +103,7 @@ namespace CodeM.FastApi.Context
         }
 
         public RouteParams RouteParams
-{
+        {
             get
             {
                 if (mRouteParams == null && mContext != null)
