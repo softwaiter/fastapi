@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <routers>
-    <router path="/hello" handler="CodeM.FastApi.Controllers.Hello.Handle"></router>
     <router path="/proxy" model="Proxy"></router>
     <router path="/proxy/node" model="ProxyNode"></router>
     <router path="/proxy/reload" method="POST" handler="CodeM.FastApi.Controllers.ProxyReload.Handle" />

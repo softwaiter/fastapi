@@ -34,6 +34,10 @@
 
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_basic', 's_laodan', 'login', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_basic', 's_laodan', 'loggedinUserInfo', '2021-04-12', '2021-04-12');
         </sql>
         <sql>
@@ -230,10 +234,6 @@
             VALUES('s_laodan', 'LAODAN微服务', 0, '/', '/', 100, true, false, '2021-04-12', '2021-04-12'); 
         </sql>
 
-        <sql>
-            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan', 'hello', '/hello', 0, '测试接口', false, false, true, false, '2021-04-12', '2021-04-12')
-        </sql>
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime) 
             VALUES('s_laodan', 'login', '/login', 1, '用户登录', false, false, true, false, '2021-04-12', '2021-04-12')
@@ -580,6 +580,10 @@
             VALUES('laodan', 'gateway_log', '网关日志', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('basic', 's_laodan', 'login', '2021-04-12', '2021-04-12');
+        </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('basic', 's_laodan', 'loggedinUserInfo', '2021-04-12', '2021-04-12');

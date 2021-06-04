@@ -12,12 +12,6 @@ namespace CodeM.FastApi.System.Utils
         {
             error = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(platform))
-            {
-                error = "无效的参数。";
-                return false;
-            }
-
             if (!userObj.Actived)
             {
                 error = "用户已禁用。";
@@ -52,11 +46,6 @@ namespace CodeM.FastApi.System.Utils
             }
 
             dynamic prodObj = ProductService.GetProductByCode(platform);
-            if (prodObj == null)
-            {
-                error = "不识别的应用系统。";
-                return false;
-            }
             if (!prodObj.Actived)
             {
                 error = "应用系统已禁用。";

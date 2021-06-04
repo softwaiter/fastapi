@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.AspNetCore.Routing.Template;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 //using CodeM.Common.Orm.Serialize.ModelObject;
 
@@ -21,8 +22,8 @@ namespace CodeM.FastApi.System.Utils
         }
         private static Dictionary<string, List<Permission>> sPermissions = new Dictionary<string, List<Permission>>();
 
-        private static Dictionary<string, dynamic> sPermissionSettingCaches = new Dictionary<string, dynamic>();
-        private static Dictionary<string, TemplateMatcher> sPermissionMatcherCaches = new Dictionary<string, TemplateMatcher>();
+        private static ConcurrentDictionary<string, dynamic> sPermissionSettingCaches = new ConcurrentDictionary<string, dynamic>();
+        private static ConcurrentDictionary<string, TemplateMatcher> sPermissionMatcherCaches = new ConcurrentDictionary<string, TemplateMatcher>();
 
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace CodeM.FastApi.System.Utils
             sPermissionDataRules = _temp2;
             sPermissionDataParamValueExprs = _temp3;
 
-            sPermissionSettingCaches = new Dictionary<string, dynamic>();
+            sPermissionSettingCaches = new ConcurrentDictionary<string, dynamic>();
         }
 
         public static void Reload()
@@ -168,6 +169,12 @@ namespace CodeM.FastApi.System.Utils
 
             sPermissionSettingCaches[key] = result;
             return result;
+        }
+
+        public static bool HasPermission(string platform, string permissionCode)
+        {
+            long modulePermissionCount = ModulePermissionService.GetEffectiveCountByProductAndPermission(platform, permissionCode);
+            return modulePermissionCount > 0;
         }
 
         public static bool HasPermission(string userCode, string platform, string permissionCode)

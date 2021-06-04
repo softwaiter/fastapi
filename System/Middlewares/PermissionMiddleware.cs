@@ -26,6 +26,20 @@ namespace CodeM.FastApi.System.Middlewares
             dynamic permission = PermissionUtils.GetPermissionSetting(cc.Request);
             if (permission != null)
             {
+                string platform = cc.Headers.Get("Platform", string.Empty);
+                if (string.IsNullOrWhiteSpace(platform))
+                {
+                    await cc.JsonAsync(-1, null, "缺少系统参数。");
+                    return;
+                }
+
+                dynamic prodObj = ProductService.GetProductByCode(platform);
+                if (prodObj == null)
+                {
+                    await cc.JsonAsync(-1, null, "不识别的应用系统。");
+                    return;
+                }
+
                 //处理即时令牌
                 if (permission.SupportLoginToken)
                 {
@@ -49,7 +63,7 @@ namespace CodeM.FastApi.System.Middlewares
                         return;
                     }
 
-                    if (userObj.MustChangePassNow && 
+                    if (userObj.MustChangePassNow &&
                         !("/login/user".Equals(cc.Request.Path, StringComparison.OrdinalIgnoreCase) ||
                         "/changepass".Equals(cc.Request.Path, StringComparison.OrdinalIgnoreCase)))
                     {
@@ -59,7 +73,6 @@ namespace CodeM.FastApi.System.Middlewares
 
                     //用户是否合法
                     string error;
-                    string platform = cc.Headers.Get("Platform", string.Empty);
                     if (!LoginUtils.CheckUserValidity(userObj, platform, out error))
                     {
                         await cc.JsonAsync(1003, null, error);
@@ -68,6 +81,15 @@ namespace CodeM.FastApi.System.Middlewares
 
                     //用户是否拥有权限
                     if (!PermissionUtils.HasPermission(userCode, platform, permission.Code))
+                    {
+                        cc.State = 401;
+                        return;
+                    }
+                }
+                else
+                {
+                    //产品是否拥有权限
+                    if (!PermissionUtils.HasPermission(platform, permission.Code))
                     {
                         cc.State = 401;
                         return;

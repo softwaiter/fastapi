@@ -25,5 +25,16 @@ namespace CodeM.FastApi.Services
                 .Query();
             return result;
         }
+
+        public static long GetEffectiveCountByProductAndPermission(string prodCode, string permissionCode)
+        {
+            long result = OrmUtils.Model("ModulePermission")
+                .Equals("Module.Product", prodCode)
+                .Equals("Permission", permissionCode)
+                .Equals("Module.Actived", true)
+                .Equals("Module.Deleted", false)
+                .Count();
+            return result;
+        }
     }
 }

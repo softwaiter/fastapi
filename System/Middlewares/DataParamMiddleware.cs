@@ -36,7 +36,7 @@ namespace CodeM.FastApi.System.Middlewares
                     if (!string.IsNullOrWhiteSpace(userCode))
                     {
                         role = cc.Headers.Get("Role", string.Empty);
-                        if (!(!string.IsNullOrWhiteSpace(role) && 
+                        if (!(!string.IsNullOrWhiteSpace(role) &&
                             UserRoleService.HasActivedRole(userCode, role)))
                         {
                             dynamic result = UserRoleService.GetFirstEffectiveRole(userCode, platform);
@@ -85,9 +85,13 @@ namespace CodeM.FastApi.System.Middlewares
                         RequestParamUtils.ProcessParam(cc, item, env);
                     });
                 }
-            }
 
-            await _next(context);
+                await _next(context);
+            }
+            else
+            {
+                cc.State = 404;
+            }
         }
     }
 }
