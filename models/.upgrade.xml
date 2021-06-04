@@ -114,7 +114,7 @@
         </sql>
         <sql>
             INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
-            VALUES('s_laodan_userList_pd_1621936746153', 'where', 0, 0, '"(" + oldData + ") and org=" + globalData.Org.Code', '2021-04-12', '2021-04-12')
+            VALUES('s_laodan_userList_pd_1621936746153', 'where', 0, 0, '"(" + value + ") and org=" + env.Current.Org.Code', '2021-04-12', '2021-04-12')
         </sql>
 
         <sql>
@@ -128,7 +128,7 @@
         </sql>
         <sql>
             INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
-            VALUES('s_laodan_newUser_pd_1621936610389', 'Org', 2, 0, 'globalData.Org.Code', '2021-04-12', '2021-04-12')
+            VALUES('s_laodan_newUser_pd_1621936610389', 'Org', 2, 0, 'env.Current.Org.Code', '2021-04-12', '2021-04-12')
         </sql>
 
         <sql>
@@ -137,8 +137,8 @@
         </sql>
         
         <sql>
-            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_updateUser_pd_1621992555494', 'updateUserqueenq_user', 'updateUser', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_updateUser_pd_1621992555494', 'updateUserqueenq_user', 'updateUser', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserById(env.Request.RouteParams["id"]);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
         </sql>
         <sql>
             INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
@@ -150,6 +150,60 @@
             VALUES('s_laodan_deleteUser_pd_1621992987913', 'deleteUserqueen', 'deleteUser', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_deleteUser_pd_1622451907389', 'deleteUserqueenq_user', 'deleteUser', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserById(env.Request.RouteParams["id"]);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_resetUserPass_pd_1622453139064', 'resetUserPassqueen', 'resetUserPass', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_resetUserPass_pd_1622453320823', 'resetUserPassqueenq_user', 'resetUserPass', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserById(env.Request.RouteParams["id"]);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_userProductList_pd_1622457595773', 'userProductListqueen', 'userProductList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_userProductList_pd_1622457731267', 'userProductListqueenq_user', 'userProductList', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_userProductList_pd_1622457731267', 'where', 0, 0, '"(" + value + ") and User.Org=" + env.Current.Org.Code', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_addUserProduct_pd_1622601915225', 'addUserProductqueen', 'addUserProduct', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_addUserProduct_pd_1622603387868', 'addUserProductqueenq_user', 'addUserProduct', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserByCode(env.Request.PostJson.User);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_deleteUserProduct_pd_1622606115726', 'deleteUserProductqueen', 'deleteUserProduct', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_deleteUserProduct_pd_1622705279109', 'deleteUserProductqueenq_user', 'deleteUserProduct', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserProductById(env.Request.RouteParams["id"]);dynamic b = Utils.GetUserByCode(a.User);return b.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_moduleList_pd_1622707641265', 'moduleListqueen', 'moduleList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        
         <sql>
             INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('org_laodan', 'queen', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
@@ -176,6 +230,10 @@
             VALUES('s_laodan', 'LAODAN微服务', 0, '/', '/', 100, true, false, '2021-04-12', '2021-04-12'); 
         </sql>
 
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'hello', '/hello', 0, '测试接口', false, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime) 
             VALUES('s_laodan', 'login', '/login', 1, '用户登录', false, false, true, false, '2021-04-12', '2021-04-12')

@@ -1,13 +1,11 @@
 ﻿using CodeM.FastApi.Config;
 using CodeM.FastApi.Context;
 using CodeM.FastApi.Services;
+using CodeM.FastApi.System.Runtime;
 using CodeM.FastApi.System.Utils;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Routing;
 
 namespace CodeM.FastApi.System.Middlewares
 {
@@ -26,7 +24,7 @@ namespace CodeM.FastApi.System.Middlewares
         {
             ControllerContext cc = ControllerContext.FromHttpContext(context, mConfig);
 
-            dynamic permission = PermissionUtils.GetPermission(cc.Request);
+            dynamic permission = PermissionUtils.GetPermissionSetting(cc.Request);
             if (permission != null)
             {
                 string platform = cc.Headers.Get("Platform", string.Empty);
@@ -70,22 +68,11 @@ namespace CodeM.FastApi.System.Middlewares
                         return;
                     }
 
+                    RuntimeEnvironment env = new RuntimeEnvironment(context, mConfig);
+
                     if (!string.IsNullOrWhiteSpace(permissionData.CheckRules))
                     {
-                        dynamic user = null;
-                        dynamic org = null;
-                        string userCode = LoginUtils.GetLoginUserCode(cc);
-                        if (userCode != null)
-                        {
-                            user = UserService.GetUserByCode(userCode);
-                            org = OrgService.GetOrgByCode(user.Org);
-                        }
-
-                        dynamic globalData = new GlobalData(user, org);
-
-                        string userId = cc.RouteParams["id"];
-                        Console.WriteLine(userId);
-                        if (!PermissionUtils.CheckPermissionDataRule(permissionData.UnionIdent, cc, globalData))
+                        if (!PermissionUtils.CheckPermissionDataRule(permissionData.UnionIdent, env))
                         {
                             cc.State = 416;
                             return;
@@ -95,7 +82,7 @@ namespace CodeM.FastApi.System.Middlewares
                     List<dynamic> paramSettings = PermissionDataParamService.GetListByPermissionData(permissionData.Code);
                     paramSettings.ForEach(item =>
                     {
-                        RequestParamUtils.ProcessParam(cc, item);
+                        RequestParamUtils.ProcessParam(cc, item, env);
                     });
                 }
             }

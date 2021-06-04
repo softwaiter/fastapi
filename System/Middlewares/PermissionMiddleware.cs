@@ -23,7 +23,7 @@ namespace CodeM.FastApi.System.Middlewares
         {
             ControllerContext cc = ControllerContext.FromHttpContext(context, mConfig);
 
-            dynamic permission = PermissionUtils.GetPermission(cc.Request);
+            dynamic permission = PermissionUtils.GetPermissionSetting(cc.Request);
             if (permission != null)
             {
                 //处理即时令牌

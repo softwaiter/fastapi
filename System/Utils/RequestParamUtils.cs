@@ -1,6 +1,6 @@
 ﻿using CodeM.Common.Tools.Json;
 using CodeM.FastApi.Context;
-using CodeM.FastApi.Services;
+using CodeM.FastApi.System.Runtime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -18,27 +18,28 @@ namespace CodeM.FastApi.System.Utils
         /// </summary>
         /// <param name="context"></param>
         /// <param name="item">PermissionDataParam模型对象实例</param>
-        public static void ProcessParam(ControllerContext cc, dynamic item)
+        public static void ProcessParam(ControllerContext cc, dynamic item, RuntimeEnvironment env)
         {
             int type = item.Type;
             switch (type)  //参数类型（0:Query, 1:Header, 2:PostJson, 3:PostForm）
             {
                 case 0: //Query
-                    ProcessQueryParam(cc, item);
+                    ProcessQueryParam(cc, item, env);
                     break;
                 case 1: //Header
-                    ProcessHeaderParam(cc, item);
+                    ProcessHeaderParam(cc, item, env);
                     break;
                 case 2: //PostJson
-                    ProcessJsonParam(cc, item);
+                    ProcessJsonParam(cc, item, env);
                     break;
                 case 3: //PostForm
-                    ProcessFormParam(cc, item);
+                    ProcessFormParam(cc, item, env);
                     break;
             }
         }
 
-        public static void ProcessQueryParam(ControllerContext cc, dynamic item)
+        public static void ProcessQueryParam(ControllerContext cc,
+            dynamic item, RuntimeEnvironment env)
         {
             HttpRequest req = cc.Request;
 
@@ -46,27 +47,16 @@ namespace CodeM.FastApi.System.Utils
             string name = item.Name;
             string value = item.Value;
 
-            string oldData = null;
-            if (req.Query.ContainsKey(name))
-            {
-                oldData = req.Query[name];
-            }
-
-            
-            dynamic user = null;
-            dynamic org = null;
-            string userCode = LoginUtils.GetLoginUserCode(cc);
-            if (userCode != null)
-            {
-                user = UserService.GetUserByCode(userCode);
-                org = OrgService.GetOrgByCode(user.Org);
-            }
-
-            dynamic globalData = new GlobalData(user, org);
-
             if (!string.IsNullOrWhiteSpace(value))
             {
-                value = PermissionUtils.ExecDataPermissionParamValue(item.PermissionData, name, oldData, globalData);
+                string currentValue = null;
+                if (req.Query.ContainsKey(name))
+                {
+                    currentValue = req.Query[name];
+                }
+
+                value = PermissionUtils.ExecDataPermissionParamValue(
+                    item.PermissionData, name, env, currentValue);
             }
 
             switch (behaviour)  //操作类型（0:Set, 1:Add, 2:Remove）
@@ -116,7 +106,8 @@ namespace CodeM.FastApi.System.Utils
             }
         }
 
-        public static void ProcessHeaderParam(ControllerContext cc, dynamic item)
+        public static void ProcessHeaderParam(ControllerContext cc,
+            dynamic item, RuntimeEnvironment env)
         {
             HttpRequest req = cc.Request;
 
@@ -124,22 +115,11 @@ namespace CodeM.FastApi.System.Utils
             string name = item.Name;
             dynamic value = item.Value;
 
-            dynamic oldData = cc.Headers.Get(name, null);
-
-            dynamic user = null;
-            dynamic org = null;
-            string userCode = LoginUtils.GetLoginUserCode(cc);
-            if (userCode != null)
-            {
-                user = UserService.GetUserByCode(userCode);
-                org = OrgService.GetOrgByCode(user.Org);
-            }
-
-            dynamic globalData = new GlobalData(user, org);
-
             if (!string.IsNullOrWhiteSpace(value))
             {
-                value = PermissionUtils.ExecDataPermissionParamValue(item.PermissionData, name, oldData, globalData);
+                dynamic currentValue = cc.Headers.Get(name, null);
+                value = PermissionUtils.ExecDataPermissionParamValue(
+                    item.PermissionData, name, env, currentValue);
             }
 
             //操作类型（0:Set, 1:Add, 2:Remove）
@@ -160,7 +140,8 @@ namespace CodeM.FastApi.System.Utils
             }
         }
 
-        public static void ProcessJsonParam(ControllerContext cc, dynamic item)
+        public static void ProcessJsonParam(ControllerContext cc,
+            dynamic item, RuntimeEnvironment env)
         {
             dynamic jsonObj = cc.PostJson;
             if (jsonObj == null)
@@ -174,23 +155,13 @@ namespace CodeM.FastApi.System.Utils
             string name = item.Name;
             dynamic value = item.Value;
 
-            dynamic oldData = null;
-            jsonObj.TryGetValue(name, out oldData);
-
-            dynamic user = null;
-            dynamic org = null;
-            string userCode = LoginUtils.GetLoginUserCode(cc);
-            if (userCode != null)
-            {
-                user = UserService.GetUserByCode(userCode);
-                org = OrgService.GetOrgByCode(user.Org);
-            }
-
-            dynamic globalData = new GlobalData(user, org);
-
             if (!string.IsNullOrWhiteSpace(value))
             {
-                value = PermissionUtils.ExecDataPermissionParamValue(item.PermissionData, name, oldData, globalData);
+                dynamic currentValue = null;
+                jsonObj.TryGetValue(name, out currentValue);
+
+                value = PermissionUtils.ExecDataPermissionParamValue(
+                    item.PermissionData, name, env, currentValue);
             }
 
             //操作类型（0:Set, 1:Add, 2:Remove）
@@ -244,7 +215,8 @@ namespace CodeM.FastApi.System.Utils
             }
         }
 
-        public static void ProcessFormParam(ControllerContext cc, dynamic item)
+        public static void ProcessFormParam(ControllerContext cc,
+            dynamic item, RuntimeEnvironment env)
         {
             HttpRequest req = cc.Request;
             if (req.HasFormContentType)
@@ -253,22 +225,11 @@ namespace CodeM.FastApi.System.Utils
                 string name = item.Name;
                 dynamic value = item.Value;
 
-                dynamic oldData = cc.PostForms.Get(name, null);
-
-                dynamic user = null;
-                dynamic org = null;
-                string userCode = LoginUtils.GetLoginUserCode(cc);
-                if (userCode != null)
-                {
-                    user = UserService.GetUserByCode(userCode);
-                    org = OrgService.GetOrgByCode(user.Org);
-                }
-
-                dynamic globalData = new GlobalData(user, org);
-
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    value = PermissionUtils.ExecDataPermissionParamValue(item.PermissionData, name, oldData, globalData);
+                    dynamic currentValue = cc.PostForms.Get(name, null);
+                    value = PermissionUtils.ExecDataPermissionParamValue(
+                        item.PermissionData, name, env, currentValue);
                 }
 
                 switch (behaviour)

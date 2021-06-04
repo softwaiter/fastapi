@@ -1,5 +1,5 @@
-﻿using CodeM.FastApi.Context;
-using CodeM.FastApi.Services;
+﻿using CodeM.FastApi.Services;
+using CodeM.FastApi.System.Runtime;
 using CSScriptLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -21,7 +21,8 @@ namespace CodeM.FastApi.System.Utils
         }
         private static Dictionary<string, List<Permission>> sPermissions = new Dictionary<string, List<Permission>>();
 
-        private static Dictionary<string, dynamic> sPathPermissionCaches = new Dictionary<string, dynamic>();
+        private static Dictionary<string, dynamic> sPermissionSettingCaches = new Dictionary<string, dynamic>();
+        private static Dictionary<string, TemplateMatcher> sPermissionMatcherCaches = new Dictionary<string, TemplateMatcher>();
 
 
         /// <summary>
@@ -79,8 +80,8 @@ namespace CodeM.FastApi.System.Utils
                 if (!string.IsNullOrWhiteSpace(item.CheckRules))
                 {
                     dynamic expr = CSScript.Evaluator.LoadMethod(@"
-                                                        using CodeM.FastApi.Context;
-                                                        public bool Check(ControllerContext cc, dynamic globalData) {" +
+                                                        using CodeM.FastApi.System.Runtime;
+                                                        public bool Check(RuntimeEnvironment env) {" +
                                                         item.CheckRules +
                                                         "}");
                     _temp2.Add(item.UnionIdent, expr);
@@ -94,7 +95,8 @@ namespace CodeM.FastApi.System.Utils
                 if (!string.IsNullOrWhiteSpace(item.Value))
                 {
                     dynamic expr = CSScript.Evaluator.LoadMethod(@"
-                                                         public string Call(dynamic oldData, dynamic globalData) {" +
+                                                        using CodeM.FastApi.System.Runtime;
+                                                        public string Call(RuntimeEnvironment env, dynamic value) {" +
                                                                 string.Concat("return ", item.Value, ";") +
                                                              "}");
                     string key = GetDataPermissionParamKey(item);
@@ -106,7 +108,7 @@ namespace CodeM.FastApi.System.Utils
             sPermissionDataRules = _temp2;
             sPermissionDataParamValueExprs = _temp3;
 
-            sPathPermissionCaches = new Dictionary<string, dynamic>();
+            sPermissionSettingCaches = new Dictionary<string, dynamic>();
         }
 
         public static void Reload()
@@ -114,12 +116,39 @@ namespace CodeM.FastApi.System.Utils
             Load();
         }
 
-        public static dynamic GetPermission(HttpRequest req)
+        public static RouteValueDictionary GetPermissionRouteValue(HttpRequest req)
+        {
+            RouteValueDictionary routeValues = new RouteValueDictionary();
+
+            string key = string.Concat(req.Method, "_", req.Path);
+            if (sPermissionMatcherCaches.ContainsKey(key))
+            {
+                sPermissionMatcherCaches[key].TryMatch(req.Path, routeValues);
+                return routeValues;
+            }
+
+            if (sPermissions.ContainsKey(req.Method))
+            {
+                sPermissions[req.Method].ForEach((item) =>
+                {
+                    if (item.Matcher.TryMatch(req.Path, routeValues))
+                    {
+                        sPermissionMatcherCaches[key] = item.Matcher;
+                        sPermissionSettingCaches[key] = item.Settings;
+                        return;
+                    }
+                });
+            }
+
+            return routeValues;
+        }
+
+        public static dynamic GetPermissionSetting(HttpRequest req)
         {
             string key = string.Concat(req.Method, "_", req.Path);
-            if (sPathPermissionCaches.ContainsKey(key))
+            if (sPermissionSettingCaches.ContainsKey(key))
             {
-                return sPathPermissionCaches[key];
+                return sPermissionSettingCaches[key];
             }
 
             dynamic result = null;
@@ -131,12 +160,13 @@ namespace CodeM.FastApi.System.Utils
                     if (item.Matcher.TryMatch(req.Path, emptyValues))
                     {
                         result = item.Settings;
+                        sPermissionMatcherCaches[key] = item.Matcher;
                         return;
                     }
                 });
             }
 
-            sPathPermissionCaches[key] = result;
+            sPermissionSettingCaches[key] = result;
             return result;
         }
 
@@ -185,24 +215,24 @@ namespace CodeM.FastApi.System.Utils
         }
 
         public static bool CheckPermissionDataRule(string pdUnionIdent,
-            ControllerContext cc, dynamic globalData)
+            RuntimeEnvironment env)
         {
             dynamic expr;
             if (sPermissionDataRules.TryGetValue(pdUnionIdent, out expr))
             {
-                return expr.Check(cc, globalData);
+                return expr.Check(env);
             }
             return false;
         }
 
         public static dynamic ExecDataPermissionParamValue(string permissionDataCode, 
-            string permissionDataParamName, dynamic oldData, dynamic globalData)
+            string permissionDataParamName, RuntimeEnvironment env, dynamic currentValue)
         {
             string key = GetDataPermissionParamKey(permissionDataCode, permissionDataParamName);
             dynamic expr;
             if (sPermissionDataParamValueExprs.TryGetValue(key, out expr))
             {
-                return expr.Call(oldData, globalData);
+                return expr.Call(env, currentValue);
             }
             throw new Exception(string.Concat("参数表达式未找到: ", key));
         }
