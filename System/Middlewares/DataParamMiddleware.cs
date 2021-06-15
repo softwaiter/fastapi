@@ -69,10 +69,11 @@ namespace CodeM.FastApi.System.Middlewares
                     }
 
                     RuntimeEnvironment env = new RuntimeEnvironment(context, mConfig);
+                    RuntimeAssert assert = new RuntimeAssert(env);
 
                     if (!string.IsNullOrWhiteSpace(permissionData.CheckRules))
                     {
-                        if (!PermissionUtils.CheckPermissionDataRule(permissionData.UnionIdent, env))
+                        if (!PermissionUtils.CheckPermissionDataRule(permissionData.UnionIdent, env, assert))
                         {
                             cc.State = 416;
                             return;
@@ -82,7 +83,7 @@ namespace CodeM.FastApi.System.Middlewares
                     List<dynamic> paramSettings = PermissionDataParamService.GetListByPermissionData(permissionData.Code);
                     paramSettings.ForEach(item =>
                     {
-                        RequestParamUtils.ProcessParam(cc, item, env);
+                        RequestParamUtils.ProcessParam(cc, item, env, assert);
                     });
                 }
 

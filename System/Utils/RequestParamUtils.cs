@@ -18,28 +18,29 @@ namespace CodeM.FastApi.System.Utils
         /// </summary>
         /// <param name="context"></param>
         /// <param name="item">PermissionDataParam模型对象实例</param>
-        public static void ProcessParam(ControllerContext cc, dynamic item, RuntimeEnvironment env)
+        public static void ProcessParam(ControllerContext cc, dynamic item,
+            RuntimeEnvironment env, RuntimeAssert assert)
         {
             int type = item.Type;
             switch (type)  //参数类型（0:Query, 1:Header, 2:PostJson, 3:PostForm）
             {
                 case 0: //Query
-                    ProcessQueryParam(cc, item, env);
+                    ProcessQueryParam(cc, item, env, assert);
                     break;
                 case 1: //Header
-                    ProcessHeaderParam(cc, item, env);
+                    ProcessHeaderParam(cc, item, env, assert);
                     break;
                 case 2: //PostJson
-                    ProcessJsonParam(cc, item, env);
+                    ProcessJsonParam(cc, item, env, assert);
                     break;
                 case 3: //PostForm
-                    ProcessFormParam(cc, item, env);
+                    ProcessFormParam(cc, item, env, assert);
                     break;
             }
         }
 
         public static void ProcessQueryParam(ControllerContext cc,
-            dynamic item, RuntimeEnvironment env)
+            dynamic item, RuntimeEnvironment env, RuntimeAssert assert)
         {
             HttpRequest req = cc.Request;
 
@@ -56,7 +57,7 @@ namespace CodeM.FastApi.System.Utils
                 }
 
                 value = PermissionUtils.ExecDataPermissionParamValue(
-                    item.PermissionData, name, env, currentValue);
+                    item.PermissionData, name, env, assert, currentValue);
             }
 
             switch (behaviour)  //操作类型（0:Set, 1:Add, 2:Remove）
@@ -107,7 +108,7 @@ namespace CodeM.FastApi.System.Utils
         }
 
         public static void ProcessHeaderParam(ControllerContext cc,
-            dynamic item, RuntimeEnvironment env)
+            dynamic item, RuntimeEnvironment env, RuntimeAssert assert)
         {
             HttpRequest req = cc.Request;
 
@@ -119,7 +120,7 @@ namespace CodeM.FastApi.System.Utils
             {
                 dynamic currentValue = cc.Headers.Get(name, null);
                 value = PermissionUtils.ExecDataPermissionParamValue(
-                    item.PermissionData, name, env, currentValue);
+                    item.PermissionData, name, env, assert, currentValue);
             }
 
             //操作类型（0:Set, 1:Add, 2:Remove）
@@ -141,7 +142,7 @@ namespace CodeM.FastApi.System.Utils
         }
 
         public static void ProcessJsonParam(ControllerContext cc,
-            dynamic item, RuntimeEnvironment env)
+            dynamic item, RuntimeEnvironment env, RuntimeAssert assert)
         {
             dynamic jsonObj = cc.PostJson;
             if (jsonObj == null)
@@ -161,7 +162,7 @@ namespace CodeM.FastApi.System.Utils
                 jsonObj.TryGetValue(name, out currentValue);
 
                 value = PermissionUtils.ExecDataPermissionParamValue(
-                    item.PermissionData, name, env, currentValue);
+                    item.PermissionData, name, env, assert, currentValue);
             }
 
             //操作类型（0:Set, 1:Add, 2:Remove）
@@ -197,7 +198,7 @@ namespace CodeM.FastApi.System.Utils
                     }
                     break;
                 case 2: //Remove
-                    if (!jsonObj.HasPath(name))
+                    if (jsonObj.HasPath(name))
                     {
                         if (jsonObj.RemovePath(name))
                         {
@@ -216,7 +217,7 @@ namespace CodeM.FastApi.System.Utils
         }
 
         public static void ProcessFormParam(ControllerContext cc,
-            dynamic item, RuntimeEnvironment env)
+            dynamic item, RuntimeEnvironment env, RuntimeAssert assert)
         {
             HttpRequest req = cc.Request;
             if (req.HasFormContentType)
@@ -229,7 +230,7 @@ namespace CodeM.FastApi.System.Utils
                 {
                     dynamic currentValue = cc.PostForms.Get(name, null);
                     value = PermissionUtils.ExecDataPermissionParamValue(
-                        item.PermissionData, name, env, currentValue);
+                        item.PermissionData, name, env, assert, currentValue);
                 }
 
                 switch (behaviour)

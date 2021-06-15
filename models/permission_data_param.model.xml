@@ -5,7 +5,7 @@
     <property name="Name" length="32" notNull="true" uniqueGroup="uc_pd_key" desc="参数名称" />
     <property name="Type" type="Int16" notNull="true" defaultValue="0" desc="参数类型（0:Query, 1:Header, 2:PostJson, 3:PostForm）" />
     <property name="Behaviour" type="Int16" notNull="true" defaultValue="0" desc="操作类型（0:Set, 1:Add, 2:Remove）" />
-    <property name="Value" length="256" desc="参数值" />
+    <property name="Value" length="512" desc="参数值" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />
     <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
 </model>

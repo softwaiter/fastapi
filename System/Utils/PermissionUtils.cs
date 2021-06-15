@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Routing.Template;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-//using CodeM.Common.Orm.Serialize.ModelObject;
 
 namespace CodeM.FastApi.System.Utils
 {
@@ -55,7 +54,6 @@ namespace CodeM.FastApi.System.Utils
             });
 
             Dictionary<string, List<Permission>> _temp = new Dictionary<string, List<Permission>>();
-
             permissions.ForEach((item) =>
             {
                 string key = sMethods[item.Method];
@@ -82,7 +80,9 @@ namespace CodeM.FastApi.System.Utils
                 {
                     dynamic expr = CSScript.Evaluator.LoadMethod(@"
                                                         using CodeM.FastApi.System.Runtime;
-                                                        public bool Check(RuntimeEnvironment env) {" +
+                                                        using System.Collections.Generic;
+                                                        using System.Text.RegularExpressions;
+                                                        public bool Check(RuntimeEnvironment env, RuntimeAssert Assert) {" +
                                                         item.CheckRules +
                                                         "}");
                     _temp2.Add(item.UnionIdent, expr);
@@ -97,7 +97,9 @@ namespace CodeM.FastApi.System.Utils
                 {
                     dynamic expr = CSScript.Evaluator.LoadMethod(@"
                                                         using CodeM.FastApi.System.Runtime;
-                                                        public string Call(RuntimeEnvironment env, dynamic value) {" +
+                                                        using System.Collections.Generic;
+                                                        using System.Text.RegularExpressions;
+                                                        public string Call(RuntimeEnvironment env, RuntimeAssert Assert, dynamic value) {" +
                                                                 string.Concat("return ", item.Value, ";") +
                                                              "}");
                     string key = GetDataPermissionParamKey(item);
@@ -130,15 +132,17 @@ namespace CodeM.FastApi.System.Utils
 
             if (sPermissions.ContainsKey(req.Method))
             {
-                sPermissions[req.Method].ForEach((item) =>
+                List<Permission> _permissions = sPermissions[req.Method];
+                for (int i = 0; i < _permissions.Count; i++)
                 {
+                    Permission item = _permissions[i];
                     if (item.Matcher.TryMatch(req.Path, routeValues))
                     {
                         sPermissionMatcherCaches[key] = item.Matcher;
                         sPermissionSettingCaches[key] = item.Settings;
-                        return;
+                        break;
                     }
-                });
+                }
             }
 
             return routeValues;
@@ -156,15 +160,17 @@ namespace CodeM.FastApi.System.Utils
             if (sPermissions.ContainsKey(req.Method))
             {
                 RouteValueDictionary emptyValues = new RouteValueDictionary();
-                sPermissions[req.Method].ForEach((item) =>
+                List<Permission> _permissions = sPermissions[req.Method];
+                for (int i = 0; i < _permissions.Count; i++)
                 {
+                    Permission item = _permissions[i];
                     if (item.Matcher.TryMatch(req.Path, emptyValues))
                     {
                         result = item.Settings;
                         sPermissionMatcherCaches[key] = item.Matcher;
-                        return;
+                        break;
                     }
-                });
+                }
             }
 
             sPermissionSettingCaches[key] = result;
@@ -197,7 +203,7 @@ namespace CodeM.FastApi.System.Utils
                     List<string> roleCodes = new List<string>();
                     roleModules.ForEach(item =>
                     {
-                        roleCodes.Add(item.Role);
+                        roleCodes.Add(item.Role.Code);
                     });
 
                     if (roleCodes.Count > 0)
@@ -222,24 +228,25 @@ namespace CodeM.FastApi.System.Utils
         }
 
         public static bool CheckPermissionDataRule(string pdUnionIdent,
-            RuntimeEnvironment env)
+            RuntimeEnvironment env, RuntimeAssert Assert)
         {
             dynamic expr;
             if (sPermissionDataRules.TryGetValue(pdUnionIdent, out expr))
             {
-                return expr.Check(env);
+                return expr.Check(env, Assert);
             }
             return false;
         }
 
         public static dynamic ExecDataPermissionParamValue(string permissionDataCode, 
-            string permissionDataParamName, RuntimeEnvironment env, dynamic currentValue)
+            string permissionDataParamName, RuntimeEnvironment env,
+            RuntimeAssert assert, dynamic currentValue)
         {
             string key = GetDataPermissionParamKey(permissionDataCode, permissionDataParamName);
             dynamic expr;
             if (sPermissionDataParamValueExprs.TryGetValue(key, out expr))
             {
-                return expr.Call(env, currentValue);
+                return expr.Call(env, assert, currentValue);
             }
             throw new Exception(string.Concat("参数表达式未找到: ", key));
         }

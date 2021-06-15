@@ -9,7 +9,7 @@
     <property name="FreeDays" field="f_free_days" type="Int16" min="0" max="100" default="0" desc="可试用天数" />
     <property name="FreeUsers" field="f_free_users" type="Int16" min="0" max="100" default="0" desc="可试用天数" />
     <property name="IsBizSystem" field="f_is_biz" type="Boolean" default="true" desc="是否业务系统（允许用户使用的具体业务应用）" />
-    <property name="AdminRole" type="Role" joinProp="Code" desc="产品对应管理员角色" />
+    <property name="AdminRole" field="f_admin_role" type="Role" joinProp="Code" desc="产品对应管理员角色" />
     <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
     <property name="Deleted" field="f_deleted" type="Boolean" indexGroup="idx_deleted" desc="是否删除" defaultValue="false" />
     <property name="CreateTime" type="DateTime" field="f_createtime" defaultValue="{{CurrentDateTime}}" joinUpdate="false" desc="创建时间" />

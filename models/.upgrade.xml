@@ -2,11 +2,13 @@
 <versions>
 
     <version id="2">
+        <!--产品信息-->
         <sql>
-            INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('queen', 'Saas管理控制台', true, 90, 10, true, '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
+            INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_admin_role, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'Saas管理控制台', true, 90, 10, true, 'q_admin', '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--产品功能模块设置-->
         <sql>
             INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('queen', 'q_basic', '基础功能', true, false, '2021-04-12', '2021-04-12');
@@ -32,6 +34,7 @@
             VALUES('queen', 'q_log', '日志中心', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--基础功能权限分配-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_basic', 's_laodan', 'login', '2021-04-12', '2021-04-12');
@@ -49,11 +52,54 @@
             VALUES('q_basic', 's_laodan', 'logout', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--产品服务权限分配-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_product', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
         </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_product', 's_laodan', 'orgProductList', '2021-04-12', '2021-04-12');
+        </sql>
 
+        <!--产品服务数据权限配置-->
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_productList_pd_1623376961886', 'productListqueen', 'productList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_productList_pd_1623377782367', 'productListqueenq_product', 'productList', 'queen', 'q_product', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_productList_pd_1623377782367', 'source', 0, 0, '"Id,Code,Name,Url,Desc"', '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_productList_pd_1623377782367', 'where', 0, 0, '"actived=true and deleted=false and isbizsystem=true"', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_orgProductList_pd_1623389510165', 'orgProductListqueen', 'orgProductList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_orgProductList_pd_1623389592004', 'orgProductListqueenq_product', 'orgProductList', 'queen', 'q_product', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_orgProductList_pd_1623389592004', 'source', 0, 0, '"Id,Product,Users,Expires"', '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_orgProductList_pd_1623389592004', 'where', 0, 0, '"actived=true and deleted=false and org=" + env.Current.Org.Code', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <!--用户中心权限分配-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_user', 's_laodan', 'userList', '2021-04-12', '2021-04-12');
@@ -92,7 +138,7 @@
         </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
-            VALUES('q_user', 's_laodan', 'moduleList', '2021-04-12', '2021-04-12');
+            VALUES('q_user', 's_laodan', 'getOwnedProductModules', '2021-04-12', '2021-04-12');
         </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
@@ -107,6 +153,7 @@
             VALUES('q_user', 's_laodan', 'removeUserModule', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--用户中心数据权限配置-->
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan_userList_pd_1621936737599', 'userListqueen', 'userList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
@@ -115,6 +162,10 @@
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan_userList_pd_1621936746153', 'userListqueenq_user', 'userList', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_userList_pd_1621936746153', 'source', 0, 0, '"Id,Org,Code,Name,Mobile,Email,Expires,Actived,Deleted,CreateTime,UpdateTime"', '2021-04-12', '2021-04-12')
         </sql>
         <sql>
             INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
@@ -142,7 +193,7 @@
         
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_updateUser_pd_1621992555494', 'updateUserqueenq_user', 'updateUser', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserById(env.Request.RouteParams["id"]);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+            VALUES('s_laodan_updateUser_pd_1621992555494', 'updateUserqueenq_user', 'updateUser', 'queen', 'q_user', false, 'return Assert.IsSameOrgByUserId(env.Request.RouteParams["id"]);', true, false, '2021-04-12', '2021-04-12');
         </sql>
         <sql>
             INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
@@ -156,7 +207,7 @@
 
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_deleteUser_pd_1622451907389', 'deleteUserqueenq_user', 'deleteUser', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserById(env.Request.RouteParams["id"]);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+            VALUES('s_laodan_deleteUser_pd_1622451907389', 'deleteUserqueenq_user', 'deleteUser', 'queen', 'q_user', false, 'return Assert.IsSameOrgByUserId(env.Request.RouteParams["id"]);', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
@@ -166,7 +217,7 @@
 
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_resetUserPass_pd_1622453320823', 'resetUserPassqueenq_user', 'resetUserPass', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserById(env.Request.RouteParams["id"]);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+            VALUES('s_laodan_resetUserPass_pd_1622453320823', 'resetUserPassqueenq_user', 'resetUserPass', 'queen', 'q_user', false, 'return Assert.IsSameOrgByUserId(env.Request.RouteParams["id"]);', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
@@ -190,7 +241,7 @@
 
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_addUserProduct_pd_1622603387868', 'addUserProductqueenq_user', 'addUserProduct', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserByCode(env.Request.PostJson.User);return a.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+            VALUES('s_laodan_addUserProduct_pd_1622603387868', 'addUserProductqueenq_user', 'addUserProduct', 'queen', 'q_user', false, 'return env.Request.PostJson != null &amp;&amp; env.Request.PostJson.Has("User") &amp;&amp; Assert.IsSameOrgByUserCode(env.Request.PostJson.User) &amp;&amp; env.Request.PostJson.Has("Product") &amp;&amp; Assert.IsHaveProductPermission(env.Request.PostJson.Product);', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
@@ -200,40 +251,106 @@
 
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_deleteUserProduct_pd_1622705279109', 'deleteUserProductqueenq_user', 'deleteUserProduct', 'queen', 'q_user', false, 'dynamic a = Utils.GetUserProductById(env.Request.RouteParams["id"]);dynamic b = Utils.GetUserByCode(a.User);return b.Org == env.Current.User.Org;', true, false, '2021-04-12', '2021-04-12');
+            VALUES('s_laodan_deleteUserProduct_pd_1622705279109', 'deleteUserProductqueenq_user', 'deleteUserProduct', 'queen', 'q_user', false, 'return Assert.IsHaveDeleteUserProductPermission(env.Request.RouteParams["id"]);', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan_moduleList_pd_1622707641265', 'moduleListqueen', 'moduleList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+            VALUES('s_laodan_moduleList_pd_1622707641265', 'userModuleListqueen', 'userModuleList', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
         </sql>
-        
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_userModuleList_pd_1623052812105', 'userModuleListqueenq_user', 'userModuleList', 'queen', 'q_user', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_userModuleList_pd_1623052812105', 'source', 0, 0, '"Id,User,Module"', '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission_data_params (f_data_permission_code, f_name, f_type, f_behaviour, f_value, f_createtime, f_updatetime)
+            VALUES('s_laodan_userModuleList_pd_1623052812105', 'where', 0, 0, '"(" + value + ") and user.org=" + env.Current.Org.Code', '2021-04-12', '2021-04-12')
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_addUserModule_pd_1623056211877', 'addUserModulequeen', 'addUserModule', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_addUserModule_pd_1623057184650', 'addUserModulequeenq_user', 'addUserModule', 'queen', 'q_user', false, 'if (env.Request.PostJson != null &amp;&amp; env.Request.PostJson.Has("_items") &amp;&amp; env.Request.PostJson._items.Count > 0){string user = env.Request.PostJson._items[0].User;string prod = env.Request.PostJson._items[0].Product;List&lt;string&gt; modules = new List&lt;string&gt;();if (Assert.IsSameOrgByUserCode(user)){for (int i=0; i&lt;env.Request.PostJson._items.Count; i++) {dynamic item = env.Request.PostJson._items[i];if (user != item.User){return false;}if (prod != item.Product){return false;}modules.Add(item.Module);}}return Assert.IsHaveProductModulePermission(prod, modules.ToArray());}return false;', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+            
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_removeUserModule_pd_1623056380497', 'removeUserModulequeen', 'removeUserModule', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_removeUserModule_pd_1623059339217', 'removeUserModulequeenq_user', 'removeUserModule', 'queen', 'q_user', false, 'string[] ids = env.Request.QueryParams["id"].Split(",");return Assert.IsHaveProductModulePermissionById(ids);', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--角色-->
+        <sql>
+            INSERT INTO t_role (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_admin', '超级管理员', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--角色功能-->
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_basic', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_product', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_user', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_order', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_fee', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_log', '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--机构产品开通-->
         <sql>
             INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('org_laodan', 'queen', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--用户产品授权-->
         <sql>
             INSERT INTO t_user_product (f_user_code, f_prod_code, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('admin', 'queen', '9999-12-31', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--用户产品角色分配-->
         <sql>
-            INSERT INTO t_user_module(f_user_code, f_prod_code, f_module_code, f_createtime, f_updatetime)
-            VALUES('admin', 'queen', 'q_basic', '2021-04-12', '2021-04-12')
-        </sql>
-        <sql>
-            INSERT INTO t_user_module(f_user_code, f_prod_code, f_module_code, f_createtime, f_updatetime)
-            VALUES('admin', 'queen', 'q_user', '2021-04-12', '2021-04-12')
+            INSERT INTO t_user_role (f_user_code, f_role_code, f_createtime, f_updatetime)
+            VALUES('admin', 'q_admin', '2021-04-12', '2021-04-12');
         </sql>
     </version>
     
     <version id="1">
+        <!--代理注册-->
         <sql>
             INSERT INTO t_proxy (f_code, f_name, f_type, f_match_path, f_transform_path, f_request_timeout, f_actived, f_deleted, f_createtime, f_updatetime) 
             VALUES('s_laodan', 'LAODAN微服务', 0, '/', '/', 100, true, false, '2021-04-12', '2021-04-12'); 
         </sql>
 
+        <!--权限管理-->
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime) 
             VALUES('s_laodan', 'login', '/login', 1, '用户登录', false, false, true, false, '2021-04-12', '2021-04-12')
@@ -518,10 +635,21 @@
         </sql>
 
         <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'registerAccount', '/account/register', 1, '注册账户', false, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'getOwnedProductModules', '/user/{product}/modules', 0, '查询指定产品的被授权模块列表', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+
+        <!--产品信息-->
+        <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('laodan', 'LAODAN超级网关', false, 0, 0, false, '负责用户权限、微服务管理、日志监控和安全预警', true, false, '2021-04-12', '2021-04-12');
         </sql>
         
+        <!--产品角色-->
         <sql>
             INSERT INTO t_role (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('laodan', 'super_admin', '超级管理员', true, false, '2021-04-12', '2021-04-12');
@@ -531,6 +659,7 @@
             VALUES('laodan', 'user_admin', '账号管理员', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--产品功能模块-->
         <sql>
             INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('laodan', 'basic', '基础功能', true, false, '2021-04-12', '2021-04-12');
@@ -580,6 +709,7 @@
             VALUES('laodan', 'gateway_log', '网关日志', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--基础功能模块包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('basic', 's_laodan', 'login', '2021-04-12', '2021-04-12');
@@ -597,6 +727,7 @@
             VALUES('basic', 's_laodan', 'logout', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--代理列表模块包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('proxy', 's_laodan', 'proxyList', '2021-04-12', '2021-04-12');
@@ -634,6 +765,7 @@
             VALUES('proxy', 's_laodan', 'deleteProxyNode', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--权限配置模块包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('permission', 's_laodan', 'proxyList', '2021-04-12', '2021-04-12');
@@ -699,6 +831,7 @@
             VALUES('permission', 's_laodan', 'roleList', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--产品列表包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('product', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
@@ -720,6 +853,7 @@
             VALUES('product', 's_laodan', 'roleList', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--功能模块包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('module', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
@@ -761,6 +895,7 @@
             VALUES('module', 's_laodan', 'removeModulePermission', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--角色管理包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('role', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
@@ -797,7 +932,8 @@
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('role', 's_laodan', 'removeRoleModule', '2021-04-12', '2021-04-12');
         </sql>
-        
+
+        <!--机构管理包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('organization', 's_laodan', 'orgList', '2021-04-12', '2021-04-12');
@@ -815,6 +951,7 @@
             VALUES('organization', 's_laodan', 'deleteOrg', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--给机构开通产品包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('license2org', 's_laodan', 'orgList', '2021-04-12', '2021-04-12');
@@ -840,6 +977,7 @@
             VALUES('license2org', 's_laodan', 'removeOrgProduct', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--用户列表包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('user', 's_laodan', 'orgList', '2021-04-12', '2021-04-12');
@@ -865,6 +1003,7 @@
             VALUES('user', 's_laodan', 'resetUserPass', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--给用户授权产品包含的权限-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('license2user', 's_laodan', 'userList', '2021-04-12', '2021-04-12');
@@ -981,26 +1120,31 @@
             VALUES('user_admin', 'license2user', '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--默认机构信息-->
         <sql>
             INSERT INTO t_organization (f_code, f_name, f_type, f_person, f_mobile, f_email, f_is_certification, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('org_laodan', 'LAODAN网关管理组', 99, '管理员', '10000000000', 'admin@sass123.net', 3, true, false, '2021-04-12', '2021-04-12');
         </sql>
-        
+
+        <!--默认机构开通产品信息-->
         <sql>
             INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('org_laodan', 'laodan', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
         </sql>
-        
+
+        <!--默认用户信息-->
         <sql>
             INSERT INTO t_user (f_org_code, f_code, f_name, f_mobile, f_email, f_expires, f_salt, f_pass, f_must_changepass_now, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('org_laodan', 'admin', '管理员', '10000000000', 'admin@sass123.net', '9999-12-31', '6a4240804399a6b74866aed58b1fcfbf', '95def48b314c1db5052302278df0bfbbf9e93588a21feb6baa2dd6143e2b45cc', false, true, false, '2021-04-12', '2021-04-12');
         </sql>
-        
+
+        <!--默认用户授权产品信息-->
         <sql>
             INSERT INTO t_user_product (f_user_code, f_prod_code, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('admin', 'laodan', '9999-12-31', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
+        <!--默认用户分配角色信息-->
         <sql>
             INSERT INTO t_user_role (f_user_code, f_role_code, f_createtime, f_updatetime)
             VALUES('admin', 'super_admin', '2021-04-12', '2021-04-12');

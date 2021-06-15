@@ -11,6 +11,7 @@ namespace CodeM.FastApi.Services
                 .In("Role", roleCodes)
                 .Equals("Module.Actived", true)
                 .Equals("Module.Deleted", false)
+                .GetValue("Id", "Role", "CreateTime", "UpdateTime", "Module.Id", "Module.Code", "Module.Name")
                 .Query();
             return result;
         }
@@ -21,6 +22,7 @@ namespace CodeM.FastApi.Services
                 .In("Module", moduleCodes)
                 .Equals("Role.Actived", true)
                 .Equals("Role.Deleted", false)
+                .GetValue("Id", "Module", "CreateTime", "UpdateTime", "Role.Id", "Role.Code", "Role.Name")
                 .Query();
             return result;
         }

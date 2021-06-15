@@ -33,18 +33,18 @@ namespace CodeM.FastApi.Controllers
                         List<dynamic> roleModules = RoleModuleService.GetEffectiveListByRole(roleCodes.ToArray());
                         foreach (dynamic roleModule in roleModules)
                         {
-                            if (!moduleCodes.Contains(roleModule.Module))
+                            if (!moduleCodes.Contains(roleModule.Module.Code))
                             {
-                                moduleCodes.Add(roleModule.Module);
+                                moduleCodes.Add(roleModule.Module.Code);
                             }
                         }
 
                         List<dynamic> userModules = UserModuleService.GetEffectiveListByUserAndProduct(userCode, platform);
                         foreach (dynamic userModule in userModules)
                         {
-                            if (!moduleCodes.Contains(userModule.Module))
+                            if (!moduleCodes.Contains(userModule.Module.Code))
                             {
-                                moduleCodes.Add(userModule.Module);
+                                moduleCodes.Add(userModule.Module.Code);
                             }
                         }
 
