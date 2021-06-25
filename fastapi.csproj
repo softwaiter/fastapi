@@ -70,6 +70,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AlipayEasySDK" Version="2.1.3" />
         <PackageReference Include="CS-Script" Version="4.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />

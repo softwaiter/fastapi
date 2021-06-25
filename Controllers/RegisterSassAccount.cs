@@ -20,6 +20,7 @@ namespace CodeM.FastApi.Controllers
             string mobile = cc.PostJson.mobile;
             string email = cc.PostJson.email;
             string orgName = cc.PostJson.org;
+            string account = cc.PostJson.account;
             string name = cc.PostJson.name;
             string pass = cc.PostJson.pass;
             string prod = cc.PostJson.prod;
@@ -27,6 +28,7 @@ namespace CodeM.FastApi.Controllers
             if (string.IsNullOrWhiteSpace(mobile) ||
                 string.IsNullOrWhiteSpace(email) ||
                 string.IsNullOrWhiteSpace(orgName) ||
+                string.IsNullOrWhiteSpace(account) ||
                 string.IsNullOrWhiteSpace(name) ||
                 string.IsNullOrWhiteSpace(pass))
             {
@@ -58,7 +60,14 @@ namespace CodeM.FastApi.Controllers
                 return;
             }
 
-            dynamic userObj = UserService.GetUserByMobile(mobile);
+            dynamic userObj = UserService.GetUserByCode(account);
+            if (userObj != null)
+            {
+                await cc.JsonAsync(-1, null, "账户名称已存在，请使用其他名称。");
+                return;
+            }
+
+            userObj = UserService.GetUserByMobile(mobile);
             if (userObj != null)
             {
                 await cc.JsonAsync(-1, null, "该手机号已注册，请直接登录。");
@@ -85,14 +94,14 @@ namespace CodeM.FastApi.Controllers
                 prodObj = ProductService.GetProductByCode(prod);
                 if (prodObj == null)
                 {
-                    await cc.JsonAsync(-1, null, "不识别的产品标识。");
+                    await cc.JsonAsync(-1, null, "不识别的产品服务。");
                     return;
                 }
             }
 
             try
             {
-                dynamic newAccount = RegisterSaasAccountService.Register(mobile, email, orgName, name, pass, prodObj);
+                dynamic newAccount = RegisterSaasAccountService.Register(account, mobile, email, orgName, name, pass, prodObj);
                 LoginUtils.SetLoginUserCode(cc, newAccount.Code);
                 await cc.JsonAsync(cc.Session.Id);
             }

@@ -7,13 +7,13 @@ namespace CodeM.FastApi.Services
 {
     public class RegisterSaasAccountService
     {
-        public static dynamic Register(string mobile, string email, string orgName, string name, string pass, dynamic prodObj)
+        public static dynamic Register(string account, string mobile, string email, string orgName, string name, string pass, dynamic prodObj)
         {
             int transCode = OrmUtils.Model("User").GetTransaction();
             try
             {
                 dynamic newOrg = OrmUtils.Model("Organization").NewObject();
-                newOrg.Code = "test";
+                newOrg.Code = string.Concat("org_", DateTime.Now.Ticks);
                 newOrg.Name = orgName;
                 newOrg.Person = name;
                 newOrg.Mobile = mobile;
@@ -22,7 +22,7 @@ namespace CodeM.FastApi.Services
 
                 dynamic newUser = OrmUtils.Model("User").NewObject();
                 newUser.Org = newOrg.Code;
-                newUser.Code = "test";
+                newUser.Code = account;
                 newUser.Name = name;
                 newUser.Mobile = mobile;
                 newUser.Email = email;
@@ -49,7 +49,7 @@ namespace CodeM.FastApi.Services
 
                     dynamic newUserRole = OrmUtils.Model("UserRole").NewObject();
                     newUserRole.User = newUser.Code;
-                    newUserRole.Role = prodObj.AdminRole;
+                    newUserRole.Role = prod.AdminRole;
                     OrmUtils.Model("UserRole").SetValues(newUserRole).Save(transCode);
 
                     if (prodObj != null && prodObj.Code == prod.Code)

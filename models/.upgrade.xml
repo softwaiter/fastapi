@@ -5,7 +5,7 @@
         <!--产品信息-->
         <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_admin_role, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('queen', 'Saas管理控制台', true, 90, 10, true, 'q_admin', '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
+            VALUES('queen', 'Saas管理控制台', true, 36500, 99999, true, 'q_admin', '负责企业的用户管理、工单管理、费用管理和服务管理', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <!--产品功能模块设置-->
