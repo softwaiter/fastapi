@@ -1,0 +1,95 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "CodeM.FastApi.DbUpgrade/1.0.0": {
+        "dependencies": {
+          "CodeM.Common.Orm": "1.1.18",
+          "CodeM.Common.Tools": "1.1.5"
+        },
+        "runtime": {
+          "CodeM.FastApi.DbUpgrade.dll": {}
+        }
+      },
+      "CodeM.Common.DbHelper/1.0.1": {
+        "runtime": {
+          "lib/netcoreapp3.1/CodeM.Common.DbHelper.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
+      "CodeM.Common.Ioc/1.0.6": {
+        "dependencies": {
+          "CodeM.Common.Tools": "1.1.5"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/CodeM.Common.Ioc.dll": {
+            "assemblyVersion": "1.0.6.0",
+            "fileVersion": "1.0.6.0"
+          }
+        }
+      },
+      "CodeM.Common.Orm/1.1.18": {
+        "dependencies": {
+          "CodeM.Common.DbHelper": "1.0.1",
+          "CodeM.Common.Ioc": "1.0.6",
+          "CodeM.Common.Tools": "1.1.5"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/CodeM.Common.Orm.dll": {
+            "assemblyVersion": "1.1.18.0",
+            "fileVersion": "1.1.18.0"
+          }
+        }
+      },
+      "CodeM.Common.Tools/1.1.5": {
+        "runtime": {
+          "lib/netcoreapp3.1/CodeM.Common.Tools.dll": {
+            "assemblyVersion": "1.1.5.0",
+            "fileVersion": "1.1.5.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CodeM.FastApi.DbUpgrade/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CodeM.Common.DbHelper/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2r1yMwIiC/hup7D/hGvH1kxX0UktDBUIjEqcZdCwvUtuCx6eXI4pnoiS+mk4sne3GtjWTi+ikGRF8+sv82l+UQ==",
+      "path": "codem.common.dbhelper/1.0.1",
+      "hashPath": "codem.common.dbhelper.1.0.1.nupkg.sha512"
+    },
+    "CodeM.Common.Ioc/1.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-50FvbkHo46Qvwt8XjCsrF6CioZwu9d5pnxeodbImt+opDoQv/a+yl64seDms8D8w5Z2ebjIvxCuxsgjHvkIKnA==",
+      "path": "codem.common.ioc/1.0.6",
+      "hashPath": "codem.common.ioc.1.0.6.nupkg.sha512"
+    },
+    "CodeM.Common.Orm/1.1.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-esWFw0gwj9E6rIoIpMg6q3TQLEKiwfXkrMazOO2RNrw5/uZW3kFvjBFkyn+wQxwURA/YtalBOXBXrkjDIvLLTA==",
+      "path": "codem.common.orm/1.1.18",
+      "hashPath": "codem.common.orm.1.1.18.nupkg.sha512"
+    },
+    "CodeM.Common.Tools/1.1.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t6KKr2pL4CWbM8hmJgu+Kh/b5c7ujA0cmcV4eNMZoF7CkhdnRr9mh40Aks+lMy1kn2Tzg+e4SzyINedeeS/5jw==",
+      "path": "codem.common.tools/1.1.5",
+      "hashPath": "codem.common.tools.1.1.5.nupkg.sha512"
+    }
+  }
+}

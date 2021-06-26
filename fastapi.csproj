@@ -32,14 +32,11 @@
         <EntityDeploy Remove="Properties\PublishProfiles\**" />
         <None Remove="fastapi.db" />
         <None Remove="models\.upgrade.xml" />
-        <None Remove="models\organization.model.xml" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="models\.connection.xml" />
       <Content Include="models\.upgrade.xml" />
-      <Content Include="models\organization.model.xml" />
-      <Content Include="models\user.model.xml" />
     </ItemGroup>
 
     <ItemGroup>
