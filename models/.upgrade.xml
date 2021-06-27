@@ -61,6 +61,10 @@
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_product', 's_laodan', 'orgProductList', '2021-04-12', '2021-04-12');
         </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_product', 's_laodan', 'openProduct', '2021-04-12', '2021-04-12');
+        </sql>
 
         <!--产品服务数据权限配置-->
         <sql>
@@ -641,6 +645,10 @@
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan', 'getOwnedProductModules', '/user/{product}/modules', 0, '查询指定产品的被授权模块列表', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'openProduct', '/product/openning', 1, 'Saas产品开通', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
 
         <!--产品信息-->
