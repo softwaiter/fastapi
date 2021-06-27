@@ -327,7 +327,7 @@
         <!--机构产品开通-->
         <sql>
             INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('org_laodan', 'queen', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
+            VALUES('org_laodan', 'queen', 99999, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <!--用户产品授权-->
@@ -1129,7 +1129,7 @@
         <!--默认机构开通产品信息-->
         <sql>
             INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('org_laodan', 'laodan', 100, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
+            VALUES('org_laodan', 'laodan', 99999, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <!--默认用户信息-->
