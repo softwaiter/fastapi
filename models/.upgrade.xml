@@ -654,7 +654,7 @@
         <!--产品信息-->
         <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('laodan', 'LAODAN超级网关', false, 0, 0, false, '负责用户权限、微服务管理、日志监控和安全预警', true, false, '2021-04-12', '2021-04-12');
+            VALUES('laodan', 'LAODAN超级网关', false, 36500, 99999 false, '负责用户权限、微服务管理、日志监控和安全预警', true, false, '2021-04-12', '2021-04-12');
         </sql>
         
         <!--产品角色-->
