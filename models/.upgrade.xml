@@ -31,7 +31,11 @@
         </sql>
         <sql>
             INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('queen', 'q_log', '日志中心', true, false, '2021-04-12', '2021-04-12');
+            VALUES('queen', 'q_message', '消息中心', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('queen', 'q_log', '日志列表', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <!--基础功能权限分配-->
@@ -322,6 +326,10 @@
         <sql>
             INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
             VALUES('q_admin', 'q_fee', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('q_admin', 'q_message', '2021-04-12', '2021-04-12');
         </sql>
         <sql>
             INSERT INTO t_role_module (f_role_code, f_module_code, f_createtime, f_updatetime)
