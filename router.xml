@@ -6,7 +6,7 @@
     <router path="/permission" model="Permission" />
     <router path="/permission/data" model="PermissionData" />
     <router path="/permission/data/param" model="PermissionDataParam" />
-    <router path="/permission/reload" method="POST" handler="CodeM.FastApi.Controllers.PermissionReload.Handle" />
+    <router path="/permission/reload" method="POST" handler="CodeM.FastApi.Controllers.ReloadPermission.Handle" />
     <router path="/product" model="Product"></router>
     <router path="/module" model="Module"></router>
     <router path="/module/permission" model="ModulePermission" batchAction="CR"></router>
@@ -25,8 +25,8 @@
     <router path="/logout" method="POST" handler="CodeM.FastApi.Controllers.Logout.Handle" />
 
     <router path="/account/register" method="POST" handler="CodeM.FastApi.Controllers.RegisterSassAccount.Handle" />
-    <router path="/user/{product}/modules" handler="CodeM.FastApi.Controllers.UserProductModules.Handle" />
-    <router path="/product/openning" method="POST" handler="CodeM.FastApi.Controllers.ProductOpenning.Handle" />
+    <router path="/user/{product}/modules" handler="CodeM.FastApi.Controllers.GetUserProductModules.Handle" />
+    <router path="/product/openning" method="POST" handler="CodeM.FastApi.Controllers.OpenProduct.Handle" />
 
     <!--forgetpass-->
 </routers>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeM.FastApi.Controllers
 {
-    public class UserProductModules
+    public class GetUserProductModules
     {
         public async Task Handle(ControllerContext cc)
         {

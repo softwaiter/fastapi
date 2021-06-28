@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeM.FastApi.Controllers
 {
-    public class ProductOpenning
+    public class OpenProduct
     {
         public async Task Handle(ControllerContext cc)
         {

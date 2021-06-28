@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CodeM.FastApi.Controllers
 {
-    public class PermissionReload
+    public class ReloadPermission
     {
         public async Task Handle(ControllerContext cc)
         {
