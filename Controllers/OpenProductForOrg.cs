@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeM.FastApi.Controllers
 {
-    public class OpenProduct
+    public class OpenProductForOrg
     {
         public async Task Handle(ControllerContext cc)
         {
@@ -45,7 +45,7 @@ namespace CodeM.FastApi.Controllers
                     return;
                 }
 
-                ProductOpenningService.Open(user.Org, userCode, prod);
+                OpenProductForOrgService.Open(user.Org, userCode, prod);
 
                 await cc.JsonAsync("产品开通成功！");
             }

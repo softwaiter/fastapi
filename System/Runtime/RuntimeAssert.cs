@@ -122,17 +122,27 @@ namespace CodeM.FastApi.System.Runtime
         /// </summary>
         /// <param name="userProdId">指定用户产品授权Id</param>
         /// <returns></returns>
-        public bool IsHaveDeleteUserProductPermission(string userProdId)
+        public bool IsHaveDeleteUserProductPermission(params string[] userProdIds)
         {
-            dynamic userProd = UserProdService.GetUserProdById(userProdId);
-            if (userProd != null)
+            if (userProdIds.Length > 0)
             {
-                dynamic user = UserService.GetUserByCode(userProd.User);
-                if (user != null && user.Org == mEnv.Current.User.Org)  //是否和当前用户同一机构
+                List<dynamic> userProdList = UserProdService.GetUserProdByIds(userProdIds);
+                foreach (dynamic userProd in userProdList)
                 {
-                    dynamic userProd2 = UserProdService.GetUserProdByCode(mEnv.Current.User.Code, userProd.Product);
-                    return userProd2 != null && userProd2.Actived && !userProd2.Deleted;    //当前用户自身是否有该产品的有效授权
+                    if (userProd != null)
+                    {
+                        dynamic user = UserService.GetUserByCode(userProd.User);
+                        if (user != null && user.Org == mEnv.Current.User.Org)  //是否和当前用户同一机构
+                        {
+                            dynamic userProd2 = UserProdService.GetUserProdByCode(mEnv.Current.User.Code, userProd.Product);
+                            if (!(userProd2 != null && userProd2.Actived && !userProd2.Deleted))    //当前用户自身是否有该产品的有效授权
+                            {
+                                return false;
+                            }
+                        }
+                    }
                 }
+                return true;
             }
             return false;
         }

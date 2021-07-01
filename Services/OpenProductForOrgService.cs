@@ -3,7 +3,7 @@ using System;
 
 namespace CodeM.FastApi.Services
 {
-    public class ProductOpenningService
+    public class OpenProductForOrgService
     {
         public static void Open(string orgCode, string userCode, dynamic prodObj)
         {

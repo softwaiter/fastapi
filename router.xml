@@ -26,7 +26,8 @@
 
     <router path="/account/register" method="POST" handler="CodeM.FastApi.Controllers.RegisterSassAccount.Handle" />
     <router path="/user/{product}/modules" handler="CodeM.FastApi.Controllers.GetUserProductModules.Handle" />
-    <router path="/product/openning" method="POST" handler="CodeM.FastApi.Controllers.OpenProduct.Handle" />
+    <router path="/org/product/openning" method="POST" handler="CodeM.FastApi.Controllers.OpenProductForOrg.Handle" />
+    <router path="/user/product/authorization" method="POST" handler="CodeM.FastApi.Controllers.AuthorizeProductForUser.Handle" />
 
     <!--forgetpass-->
 </routers>

@@ -67,7 +67,7 @@
         </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
-            VALUES('q_product', 's_laodan', 'openProduct', '2021-04-12', '2021-04-12');
+            VALUES('q_product', 's_laodan', 'openOrgProduct', '2021-04-12', '2021-04-12');
         </sql>
 
         <!--产品服务数据权限配置-->
@@ -134,7 +134,7 @@
         </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
-            VALUES('q_user', 's_laodan', 'addUserProduct', '2021-04-12', '2021-04-12');
+            VALUES('q_user', 's_laodan', 'authUserProduct', '2021-04-12', '2021-04-12');
         </sql>
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
@@ -144,6 +144,11 @@
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_user', 's_laodan', 'deleteUserProduct', '2021-04-12', '2021-04-12');
         </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('q_user', 's_laodan', 'batchDeleteUserProduct', '2021-04-12', '2021-04-12');
+        </sql>
+        
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('q_user', 's_laodan', 'getOwnedProductModules', '2021-04-12', '2021-04-12');
@@ -260,6 +265,16 @@
         <sql>
             INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan_deleteUserProduct_pd_1622705279109', 'deleteUserProductqueenq_user', 'deleteUserProduct', 'queen', 'q_user', false, 'return Assert.IsHaveDeleteUserProductPermission(env.Request.RouteParams["id"]);', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_batchDeleteUserProduct_pd_1625109958704', 'batchDeleteUserProductqueen', 'batchDeleteUserProduct', 'queen', '', true, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <sql>
+            INSERT INTO t_permission_data (f_code, f_union_ident, f_permission_code, f_prod_code, f_module_code, f_out_of_range, f_check_rules, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan_batchDeleteUserProduct_pd_1625110126170', 'batchDeleteUserProductqueenq_user', 'batchDeleteUserProduct', 'queen', 'q_user', false, 'return Assert.IsHaveDeleteUserProductPermission(env.Request.QueryParams["id"].Split(","));', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <sql>
@@ -619,6 +634,10 @@
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan', 'deleteUserProduct', '/user/product/{id}', 3, '删除用户产品授权', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'batchDeleteUserProduct', '/user/product', 3, '批量删除用户产品授权', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
 
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
@@ -656,9 +675,13 @@
         </sql>
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('s_laodan', 'openProduct', '/product/openning', 1, 'Saas产品开通', true, false, true, false, '2021-04-12', '2021-04-12')
+            VALUES('s_laodan', 'openOrgProduct', '/org/product/openning', 1, 'Saas产品开通', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
-
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'authUserProduct', '/user/product/authorization', 1, 'Saas产品开通', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        
         <!--产品信息-->
         <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_price, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
