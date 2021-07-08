@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<model name="UserKey" table="t_user_key">
+    <property name="Id" field="f_id" notNull="True" primary="true" autoIncrement="true" joinInsert="false" jojnUpdate="false" desc="主键"/>
+    <property name="User" field="f_user_code" type="User" joinProp="Code" notNull="true" uniqueGroup="uc_user_prod_module" desc="所属用户" />
+    
+    <!--
+    UID:
+    Secret:
+    RSA公钥:    内容：secret  usercode  timestamp
+    -->
+
+    <property name="Actived" field="f_actived" type="Boolean" indexGroup="idx_actived" desc="是否激活" defaultValue="true" />
+    <property name="CreateTime" type="DateTime" field="f_createtime" joinUpdate="false" defaultValue="{{CurrentDateTime}}" desc="创建时间" />
+    <property name="UpdateTime" type="DateTime" field="f_updatetime" beforeSave="{{CurrentDateTime}}" desc="更新时间" />
+</model>
