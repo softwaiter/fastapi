@@ -617,6 +617,22 @@
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan', 'resetUserPass', '/resetpass/{id}', 1, '重置用户密码', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'queryOpenApi', '/openapi/{userid}', 0, '查询OpenApi密钥', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'newOpenApi', '/openapi/{userid}', 1, '生成OpenApi密钥', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'replaceOpenApi', '/openapi/{userid}/secret', 2, '更新OpenApi密钥', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'enableOpenApi', '/openapi/{userid}/enable', 2, '切换OpenApi状态', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
 
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
@@ -1040,6 +1056,22 @@
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
             VALUES('user', 's_laodan', 'resetUserPass', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('user', 's_laodan', 'queryOpenApi', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('user', 's_laodan', 'newOpenApi', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('user', 's_laodan', 'replaceOpenApi', '2021-04-12', '2021-04-12');
+        </sql>
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('user', 's_laodan', 'enableOpenApi', '2021-04-12', '2021-04-12');
         </sql>
 
         <!--给用户授权产品包含的权限-->

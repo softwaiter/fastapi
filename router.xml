@@ -29,5 +29,10 @@
     <router path="/org/product/openning" method="POST" handler="CodeM.FastApi.Controllers.OpenProductForOrg.Handle" />
     <router path="/user/product/authorization" method="POST" handler="CodeM.FastApi.Controllers.AuthorizeProductForUser.Handle" />
 
+    <router path="/openapi/{userid}" method="GET" handler="CodeM.FastApi.Controllers.OpenApi.Query" />
+    <router path="/openapi/{userid}" method="POST" handler="CodeM.FastApi.Controllers.OpenApi.Create" />
+    <router path="/openapi/{userid}/secret" method="PUT" handler="CodeM.FastApi.Controllers.OpenApi.Replace" />
+    <router path="/openapi/{userid}/enable" method="PUT" handler="CodeM.FastApi.Controllers.OpenApi.Enable" />
+
     <!--forgetpass-->
 </routers>
