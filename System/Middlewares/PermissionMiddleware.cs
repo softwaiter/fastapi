@@ -43,6 +43,17 @@ namespace CodeM.FastApi.System.Middlewares
                 //处理即时令牌
                 if (permission.SupportLoginToken)
                 {
+                    string openid = cc.QueryParams.Get("openid", null);
+                    string sign = cc.QueryParams.Get("sign", null);
+                    if (!string.IsNullOrWhiteSpace(openid) &&
+                        !string.IsNullOrWhiteSpace(sign))
+                    {
+                        string userCode = LoginUtils.ParseLoginToken(openid, sign);
+                        if (!string.IsNullOrWhiteSpace(userCode))
+                        {
+                            LoginUtils.SetLoginUserCode(cc, userCode);
+                        }
+                    }
                 }
 
                 //是否需要登录

@@ -7,6 +7,12 @@ namespace CodeM.FastApi.Services
 {
     public class UserKeyService
     {
+        public static dynamic GetOpenApiByOpenId(string openid)
+        {
+            dynamic result = OrmUtils.Model("UserKey").Equals("OpenId", openid).QueryFirst();
+            return result;
+        }
+
         public static dynamic GetOpenApiByUserId(string userid)
         {
             dynamic user = UserService.GetUserById(userid);

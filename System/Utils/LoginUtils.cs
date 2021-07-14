@@ -1,6 +1,10 @@
-﻿using CodeM.FastApi.Context;
+﻿using CodeM.Common.Tools;
+using CodeM.FastApi.Context;
 using CodeM.FastApi.Services;
 using System;
+using System.Security.Cryptography;
+using System.Text;
+using XC.RSAUtil;
 
 namespace CodeM.FastApi.System.Utils
 {
@@ -102,6 +106,54 @@ namespace CodeM.FastApi.System.Utils
             }
 
             return true;
+        }
+
+        public static string ParseLoginToken(string openid, string sign)
+        {
+            dynamic userKey = UserKeyService.GetOpenApiByOpenId(openid);
+            if (userKey != null)
+            {
+                try
+                {
+                    RsaPkcs1Util rsa = new RsaPkcs1Util(Encoding.UTF8, userKey.PublicKey, userKey.PrivateKey, 2048);
+                    string ming = rsa.Decrypt(sign, RSAEncryptionPadding.Pkcs1);
+                    string[] payloads = ming.Split("+");
+                    if (payloads.Length == 3)
+                    {
+                        if (userKey.User == payloads[0])
+                        {
+                            long tt;
+                            if (payloads[1].Length == 13 &&
+                                long.TryParse(payloads[1], out tt))
+                            {
+                                DateTime signTime = DateTimeUtils.GetLocalDateTimeFromUtcTimestamp13(tt);
+                                TimeSpan ts = signTime - DateTime.Now;
+                                if (Math.Abs(ts.TotalMinutes) < 5)
+                                {
+                                    return payloads[0];
+                                }
+                                else
+                                {
+                                    throw new Exception("非法签名。");
+                                }
+                            }
+                            else
+                            {
+                                throw new Exception("非法签名。");
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("非法签名。");
+                        }
+                    }
+                }
+                catch
+                {
+                    throw new Exception("非法签名！");
+                }
+            }
+            return null;
         }
 
         public static void SetLoginUserCode(ControllerContext cc, string token)
