@@ -367,7 +367,7 @@
         <!--OpenAPI产品信息-->
         <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_price, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('openapi', 'OpenAPI开放服务', false, 36500, 99999, false, 0, '提供开放接口服务的调用和管理', true, false, '2021-04-12', '2021-04-12');
+            VALUES('openapi', 'OpenAPI开放服务', false, 36500, 99999, false, 0, '负责所有对第三方开放的接口服务的功能划分、权限配置和其他管理。', true, false, '2021-04-12', '2021-04-12');
         </sql>
 
         <!--产品功能模块设置-->
@@ -379,7 +379,7 @@
         <!--产品功能模块权限配置-->
         <sql>
             INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
-            VALUES('o_query_product', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
+            VALUES('o_query_product', 's_laodan', 'productDetail', '2021-04-12', '2021-04-12');
         </sql>
 
         <!--OpenAPI机构开通产品-->
@@ -544,6 +544,10 @@
         <sql>
             INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('s_laodan', 'deleteProduct', '/product/{id}', 3, '删除产品', true, false, true, false, '2021-04-12', '2021-04-12')
+        </sql>
+        <sql>
+            INSERT INTO t_permission (f_proxy_code, f_code, f_path, f_method, f_description, f_require_login, f_allow_login_with_token, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('s_laodan', 'productDetail', '/product/{id}', 0, '查询产品详情', true, false, true, false, '2021-04-12', '2021-04-12')
         </sql>
 
         <sql>
