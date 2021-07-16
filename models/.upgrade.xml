@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<versions>
-
-    <version id="2">
+<versions>    
+    <version id="3">
         <!--产品信息-->
         <sql>
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_admin_role, f_price, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
@@ -351,22 +350,66 @@
             VALUES('q_admin', 'q_log', '2021-04-12', '2021-04-12');
         </sql>
 
-        <!--机构产品开通-->
-        <sql>
-            INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('org_laodan', 'queen', 99999, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
-        </sql>
-
-        <!--用户产品授权-->
-        <sql>
-            INSERT INTO t_user_product (f_user_code, f_prod_code, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
-            VALUES('admin', 'queen', '9999-12-31', true, false, '2021-04-12', '2021-04-12');
-        </sql>
-
         <!--用户产品角色分配-->
         <sql>
             INSERT INTO t_user_role (f_user_code, f_role_code, f_createtime, f_updatetime)
             VALUES('admin', 'q_admin', '2021-04-12', '2021-04-12');
+        </sql>
+    </version>
+    
+    <version id="2">
+        <!--OpenAPI机构信息-->
+        <sql>
+            INSERT INTO t_organization (f_code, f_name, f_type, f_person, f_mobile, f_email, f_is_certification, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('org_openapi', 'OpenAPI开放服务组', 99, '管理员', '10000000000', 'admin@sass123.net', 3, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--OpenAPI产品信息-->
+        <sql>
+            INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_price, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('openapi', 'OpenAPI开放服务', false, 36500, 99999, false, 0, '提供开放接口服务的调用和管理', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--产品功能模块设置-->
+        <sql>
+            INSERT INTO t_module (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('openapi', 'o_query_product', '查询产品信息', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--产品功能模块权限配置-->
+        <sql>
+            INSERT INTO t_module_permission (f_module_code, f_proxy_code, f_permission_code, f_createtime, f_updatetime)
+            VALUES('o_query_product', 's_laodan', 'productList', '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--OpenAPI机构开通产品-->
+        <sql>
+            INSERT INTO t_org_product (f_org_code, f_prod_code, f_users, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('org_openapi', 'openapi', 99999, '9999-12-31', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--支付服务OpenAPI用户信息-->
+        <sql>
+            INSERT INTO t_user (f_org_code, f_code, f_name, f_mobile, f_email, f_expires, f_salt, f_pass, f_must_changepass_now, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('org_openapi', 'api_payment', '支付微服务', '10000000001', 'payment@sass123.net', '9999-12-31', '', '', false, true, false, '2021-04-12', '2021-04-12');
+        </sql>
+        
+        <!--OpenAPI用户密钥信息-->
+        <sql>
+            INSERT INTO t_user_key (f_user_code, f_open_id, f_private_key, f_public_key, f_actived, f_createtime, f_updatetime)
+            VALUES('api_payment', '80210715102448973', '-----BEGIN RSA PRIVATE KEY-----&#x000D;&#x000A;MIIEowIBAAKCAQEA3gY7ZbrmT55U0ZV5yn/38VGmZ0lKhkreHidmq1HMAyJKnACP&#x000D;&#x000A;SAzeELaqLCwPo9acQ3vPa2Fcag/ykRwDGKv6waM/PnPQDed7MWTcE9BD5LKSQxeO&#x000D;&#x000A;ABS6JUEl0Td5vbeYMYhslaZA/ojPLiy/UlQ+rdpX+PlZYppsZWp3e1T+gy8zulw5&#x000D;&#x000A;B3M4yD38iRG/iZXJI2zJx50iteknXDxQy+4+bF2mFfOI4z5zWDkpIvvx+quhYVtD&#x000D;&#x000A;bTutIuXyLMpGvCqT0TgW7RyP5e5MLbxyHR5TxEnNB6wcOA0gVa+f3UVK5CYSXmJq&#x000D;&#x000A;YHdmN1Pi4HGHAfjcKTYPcvhlNcNucZABw2KxzwIDAQABAoIBAAaHOmHgX/tBVY8g&#x000D;&#x000A;DQe2QY0X8IOi9Q0D0IokcHFjI1OIQ5dYsN3WewUUyeYomYEgw1F8p3mp0DTSKTi5&#x000D;&#x000A;ESI9lE7zRN3KO/jcsJOgOpRekFB+K6zLWYKJGXwU8U64idzZNCFouICh9dFGJole&#x000D;&#x000A;CXYbQgiMnf+VHVq33a4RtlerBRzITXyVrtvApnhfyYZuQcqwj5eBisdY5F28bGtj&#x000D;&#x000A;cUkMiS1aZCytXElp4Q4s0xV38H2JnsgnE/fv2gZq/a1uiUhNtHJwamvO0tcG+yLU&#x000D;&#x000A;anNidz59VbboaELT3rgdpn720s3mXnolRYspSQLrWveaYJO8nT07L3Aioekg9ofx&#x000D;&#x000A;VIw4g1kCgYEA+moUJP75+GXePkeChOwWb60/K8GxEe3ftuU0eWQyX77NYNRXoNSf&#x000D;&#x000A;jrX40w9vS94ZeySWrhMtNXBufTsOpUOcyIq/aUgdpliUCB7oWdkArttHbeckqvRo&#x000D;&#x000A;dHXZLZ+EJwwyNwJ2p1OTQvR0qXsE39HuZTlgXOXSsh33/5tgsT/LG5MCgYEA4voK&#x000D;&#x000A;Pp6ohCJOfHeGbm70FhkqhiABGAEwm+567panP4omc+CO5F4K1kdmB+wXFT4qwBtO&#x000D;&#x000A;/vb5nYX1yJU93Fgj8lBSCa3dNyfhN/5qLUhgyEEC4DlbDGaQq+BR6h9KI1lTDzwS&#x000D;&#x000A;EE+apjkgEdAOcHBQeq1alyRR7qQZl+ZHKYQdjlUCgYBZlxAj+FFIbHGpyH3Kvoh8&#x000D;&#x000A;Zfg+2GpYZsluLuyqLY3UMXhbFz1OniODtFkUceY4t3pYU0vRdazr/JCbH0DrIZh7&#x000D;&#x000A;KyC2MwXgmLpFeYFZe8jBxlP03wiAXTbty6fqqbJnIfbpNWlsDfuWrcz7QbcJuJrY&#x000D;&#x000A;/kEam2LZNN2gRl++qnspHwKBgQCUxy0b6sevBQXJVFeL37KjIY/cJvJQl8cTDvkJ&#x000D;&#x000A;lzq9zYJzBkjjrDkSR+67VqeyxvMixUO8oIryFDMNbbYEzsmRNdDwg0SzuLJKD7vt&#x000D;&#x000A;ProhyWtnKnFh6YD/CKTo/+WK0iw9mjSE+Ij4WA2LX4N3dEdsgmEVHTuPX4VfKhSP&#x000D;&#x000A;RAhTmQKBgAyZg3AX6mHgGd2S9gAe9EzKydLd1QN695wVzGaU/IzGO8d1iSjDXR7e&#x000D;&#x000A;ufs2n3vqg1SSNPJv2WmdD166gjLpYx4cHSTGcoLxKmHVYlRAhzgo1m+ioGxKNYc+&#x000D;&#x000A;RhOr5k2jokVxSUuyf0TsJGmmSOtkIJLtpfZfWoo/RnYcbohwgGgZ&#x000D;&#x000A;-----END RSA PRIVATE KEY-----', '-----BEGIN PUBLIC KEY-----&#x000D;&#x000A;MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3gY7ZbrmT55U0ZV5yn/3&#x000D;&#x000A;8VGmZ0lKhkreHidmq1HMAyJKnACPSAzeELaqLCwPo9acQ3vPa2Fcag/ykRwDGKv6&#x000D;&#x000A;waM/PnPQDed7MWTcE9BD5LKSQxeOABS6JUEl0Td5vbeYMYhslaZA/ojPLiy/UlQ+&#x000D;&#x000A;rdpX+PlZYppsZWp3e1T+gy8zulw5B3M4yD38iRG/iZXJI2zJx50iteknXDxQy+4+&#x000D;&#x000A;bF2mFfOI4z5zWDkpIvvx+quhYVtDbTutIuXyLMpGvCqT0TgW7RyP5e5MLbxyHR5T&#x000D;&#x000A;xEnNB6wcOA0gVa+f3UVK5CYSXmJqYHdmN1Pi4HGHAfjcKTYPcvhlNcNucZABw2Kx&#x000D;&#x000A;zwIDAQAB&#x000D;&#x000A;-----END PUBLIC KEY-----', true, '2021-04-12', '2021-04-12');
+        </sql>
+
+        <!--支付服务OpenAPI用户产品授权-->
+        <sql>
+            INSERT INTO t_user_product (f_user_code, f_prod_code, f_expires, f_actived, f_deleted, f_createtime, f_updatetime)
+            VALUES('api_payment', 'openapi', '9999-12-31', true, false, '2021-04-12', '2021-04-12');
+        </sql>
+    
+        <!--为支付服务OpenAPI用户授权功能模块-->
+        <sql>
+            INSERT INTO t_user_module (f_user_code, f_prod_code, f_module_code, f_createtime, f_updatetime)
+            VALUES('api_payment', 'openapi', 'o_query_product', '2021-04-12', '2021-04-12');
         </sql>
     </version>
     
@@ -703,7 +746,7 @@
             INSERT INTO t_product (f_code, f_name, f_is_basic, f_free_days, f_free_users, f_is_biz, f_price, f_desc, f_actived, f_deleted, f_createtime, f_updatetime)
             VALUES('laodan', 'LAODAN超级网关', false, 36500, 99999, false, 0, '负责用户权限、微服务管理、日志监控和安全预警', true, false, '2021-04-12', '2021-04-12');
         </sql>
-        
+
         <!--产品角色-->
         <sql>
             INSERT INTO t_role (f_prod_code, f_code, f_name, f_actived, f_deleted, f_createtime, f_updatetime)

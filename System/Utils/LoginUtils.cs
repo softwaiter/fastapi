@@ -111,7 +111,7 @@ namespace CodeM.FastApi.System.Utils
         public static string ParseLoginToken(string openid, string sign)
         {
             dynamic userKey = UserKeyService.GetOpenApiByOpenId(openid);
-            if (userKey != null)
+            if (userKey != null && userKey.Actived)
             {
                 try
                 {
